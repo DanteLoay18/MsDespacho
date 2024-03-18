@@ -50,5 +50,8 @@ public class Cargo extends BaseModel{
 
     @Column(name = "notas", nullable = true, length = 500)
     String notas;
+
+    @Column(name = "codigoBarra", nullable = true, length = 50)
+    String codigoBarra;
     
 }

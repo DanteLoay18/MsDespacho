@@ -28,6 +28,14 @@ public class UpdateCargoRequest {
 
     String notas;
     
+    String codigoBarra;
+
     @JsonIgnore
     private Documento documento;
+
+    @JsonIgnore
+    private Date fechaCreacion;
+
+    @JsonIgnore
+    private String usuarioCreacion;
 }

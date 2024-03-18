@@ -23,5 +23,7 @@ public class CargoDto {
 
     String notas;
 
+    String codigoBarra;
+
     private DocumentoDto documento;
 }

@@ -19,6 +19,7 @@ public class ApiRoutes {
     public static final String ENDPOINT_DOCUMENTO = "/api/v1/documento";
     public static final String LISTAR_DOCUMENTOS = "/listar-documentos";
     public static final String BUSCAR_DOCUMENTO_POR_ID = "/buscarPorId/{id}";
+    public static final String BUSCAR_DOCUMENTO_POR_CODIGOBARRA = "/buscarPorCodigoDeBarra";
     public static final String LISTAR_DOCUMENTOS_PAGINADO = "/listar-documentos-paginado";
 
     public static final String ENDPOINT_CARGO = "/api/v1/cargo";

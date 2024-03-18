@@ -62,4 +62,17 @@ public class CargoServiceImp implements CargoService{
         return model.get();
     }
 
+    @Override
+    public Cargo findByCodigoBarra(String codigoBarra) throws NotFoundException {
+        
+        Optional<Cargo> model = cargoRepository.findByCodigoDeBarra(codigoBarra);
+ 
+        if(model.isEmpty() || model.get().isEsEliminado()){
+            throw new NotFoundException("No se encontro el cargo");
+        }
+       
+        return model.get();
+
+    }
+
 }

@@ -15,4 +15,5 @@ public interface CargoService {
     public List<Cargo> findAll();
     public Page<Cargo> findAll(PageRequest pageRequest);
     public Cargo findById(int id) throws NotFoundException;
+    public Cargo findByCodigoBarra(String codigoBarra) throws NotFoundException;
 }

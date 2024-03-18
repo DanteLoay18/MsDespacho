@@ -82,6 +82,18 @@ public class CargoController {
         
     }
 
+    @GetMapping(ApiRoutes.BUSCAR_DOCUMENTO_POR_CODIGOBARRA)
+    public ResponseEntity<ApiResponse<?>> buscarPorCodigoDeBarra(@RequestParam String codigoBarra) throws NotFoundException{
+        
+        Cargo cargo = cargoService.findByCodigoBarra(codigoBarra);
+
+        CargoDto cargoDto = cargoMapper.toDto(cargo);
+
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                "", cargoDto, Collections.emptyList()));
+        
+    }
+
     @GetMapping(ApiRoutes.LISTAR_CARGOS_PAGINADO)
     public ResponseEntity<ApiResponse<?>> findAllPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int rows ){
         
@@ -131,7 +143,7 @@ public class CargoController {
         cargoService.update(cargo);
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                                                    MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
+                                                    MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, cargo, Collections.emptyList() ));
         
     }
 

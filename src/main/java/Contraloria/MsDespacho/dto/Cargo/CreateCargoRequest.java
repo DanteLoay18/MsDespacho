@@ -26,6 +26,8 @@ public class CreateCargoRequest {
 
     String notas;
 
+    String codigoBarra;
+
     @JsonIgnore
     private Documento documento;
 

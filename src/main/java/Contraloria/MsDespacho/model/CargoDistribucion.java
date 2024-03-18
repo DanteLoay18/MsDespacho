@@ -24,8 +24,8 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLRestriction(value = "ES_ELIMINADO = 0")
 public class CargoDistribucion extends BaseModel{
 
-    @Column(name = "numeroCargo", nullable = true, length = 50)
-    public String numeroCargo;
+    @Column(name = "numeroCargo", nullable = true)
+    public int numeroCargo;
 
     @Column(name = "fechaCargo", nullable = true)
     public Date fechaCargo;
