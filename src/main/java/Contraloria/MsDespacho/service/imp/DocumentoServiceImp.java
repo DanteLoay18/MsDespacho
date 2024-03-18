@@ -39,5 +39,9 @@ public class DocumentoServiceImp implements DocumentoService {
        
         return model.get();
     }
+    @Override
+    public Documento add(Documento documento) {
+        return documentoRepository.save(documento);
+    }
 
 }

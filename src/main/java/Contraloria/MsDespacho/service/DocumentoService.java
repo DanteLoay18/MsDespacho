@@ -11,5 +11,6 @@ import Contraloria.MsDespacho.model.Documento;
 public interface DocumentoService {
     public List<Documento> findAll();
     public Page<Documento> findAll(PageRequest pageRequest);
+    public Documento add (Documento documento);
     public Documento findById(int id) throws NotFoundException;
 }
