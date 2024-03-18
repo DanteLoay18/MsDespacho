@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +18,6 @@ import Contraloria.MsDespacho.constants.MensajesParametrizados;
 import Contraloria.MsDespacho.dto.ApiResponse;
 import Contraloria.MsDespacho.dto.Documento.DocumentoDto;
 import Contraloria.MsDespacho.dto.Paginator.PaginatorResponse;
-import Contraloria.MsDespacho.exception.NotFoundException;
 import Contraloria.MsDespacho.mapper.DocumentoMapper;
 import Contraloria.MsDespacho.model.Documento;
 import Contraloria.MsDespacho.routes.ApiRoutes;
@@ -57,17 +55,6 @@ public class DocumentoController {
         }
     }
 
-    @GetMapping(ApiRoutes.BUSCAR_DOCUMENTO_POR_ID)
-    public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
-        
-        Documento documento = documentoService.findById(id);
-
-        DocumentoDto documentoDto = documentoMapper.toDto(documento);
-
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                "", documentoDto, Collections.emptyList()));
-        
-    }
 
     @GetMapping(ApiRoutes.LISTAR_DOCUMENTOS_PAGINADO)
     public ResponseEntity<ApiResponse<?>> findAllPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int rows ){

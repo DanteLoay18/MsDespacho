@@ -28,4 +28,7 @@ public class ApiRoutes {
     public static final String CREAR_CARGO = "/crear";
     public static final String ACTUALIZAR_CARGO = "/actualizar";
     public static final String ELIMINAR_CARGO = "/eliminar/{id}";
+
+    public static final String ENDPOINT_DISTRIBUCION= "/api/v1/distribucion";
+    public static final String CREAR_DISTRIBUCION = "/crear-distribucion";
 }
