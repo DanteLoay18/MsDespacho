@@ -10,6 +10,8 @@ public class CreateDistribucionRequest {
     
     ArrayList<Integer> cargos;
 
-    ArrayList<Integer> cargosAdicionales;
+    ArrayList<String> cargosAdicionales;
+
+    int idSedeDestino;
 }
 

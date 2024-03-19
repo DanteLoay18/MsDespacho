@@ -20,6 +20,10 @@ public class CargoDistribucionServiceImp implements CargoDistribucionService{
 
     @Override
     public CargoDistribucion add(CargoDistribucion cargoDistribucion) {
+        long millis=System.currentTimeMillis(); 
+
+        cargoDistribucion.setFechaCargo(new java.sql.Date(millis));
+        cargoDistribucion.setNumeroCargo(cargoDistribucionRepository.findMaxNumeroCargo()+1);
         return cargoDistribucionRepository.save(cargoDistribucion);
     }
 
