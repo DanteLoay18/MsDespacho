@@ -1,7 +1,7 @@
 package Contraloria.MsDespacho.repository;
 
 import java.util.Optional;
-
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +14,11 @@ import Contraloria.MsDespacho.model.Cargo;
 public interface CargoRepository extends JpaRepository<Cargo, Integer>{
     @Query("SELECT u FROM Cargo u WHERE u.codigoBarra = :codigoBarra")
     Optional<Cargo> findByCodigoDeBarra(@Param("codigoBarra") String codigoBarra);
+
+    @Query("SELECT c.idSedeDestino as idSedeDestino, COUNT(c) as cantidad FROM Cargo c GROUP BY c.idSedeDestino")
+    List<Object[]> obtenerCantidadPorSedeDestino();
+
+    @Query("SELECT u FROM Cargo u WHERE u.idSedeDestino = :idSedeDestino")
+    List<Cargo> listarCargosPorUO(@Param("idSedeDestino") int idSedeDestino);
+
 }

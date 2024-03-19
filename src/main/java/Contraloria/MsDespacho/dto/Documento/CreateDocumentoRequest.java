@@ -2,6 +2,9 @@ package Contraloria.MsDespacho.dto.Documento;
 
 import java.sql.Date;
 
+import lombok.Data;
+
+@Data
 public class CreateDocumentoRequest {
     int tipoDocumento;
 

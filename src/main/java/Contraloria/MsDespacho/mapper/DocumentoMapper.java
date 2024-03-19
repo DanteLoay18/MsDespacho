@@ -31,4 +31,8 @@ public interface DocumentoMapper {
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
     Documento createRequestToEntity(CreateDocumentoRequest createDocumentoRequest);
+
+    default String obtenerUsuarioActual() {
+        return "UsuarioActual";
+    }
 }

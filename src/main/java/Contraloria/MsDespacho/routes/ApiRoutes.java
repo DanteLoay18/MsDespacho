@@ -26,6 +26,8 @@ public class ApiRoutes {
     public static final String LISTAR_CARGOS = "/listar-cargos";
     public static final String BUSCAR_CARGO_POR_ID = "/buscarPorId/{id}";
     public static final String LISTAR_CARGOS_PAGINADO = "/listar-cargos-paginado";
+    public static final String LISTAR_RESUMEN_CARGOS_POR_UO = "/listar-resumen-cargos-por-uo";
+    public static final String LISTAR_CARGOS_POR_UO = "/listar-cargos-por-uo/{idSedeDestino}";
     public static final String CREAR_CARGO = "/crear";
     public static final String ACTUALIZAR_CARGO = "/actualizar";
     public static final String ELIMINAR_CARGO = "/eliminar/{id}";

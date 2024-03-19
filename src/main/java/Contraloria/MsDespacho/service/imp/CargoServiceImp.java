@@ -1,8 +1,11 @@
 package Contraloria.MsDespacho.service.imp;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -73,6 +76,27 @@ public class CargoServiceImp implements CargoService{
        
         return model.get();
 
+    }
+
+    @Override
+    public List<Object> obtenerCantidadPorSedeDestino() {
+        List<Object[]> resultados = cargoRepository.obtenerCantidadPorSedeDestino();
+        
+        return resultados.stream()
+                .map(result -> {
+                    int idSedeDestino = (int) result[0];
+                    long cantidad = (long) result[1];
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("idSedeDestino", idSedeDestino);
+                    map.put("cantidad", cantidad);
+                    return map;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Cargo> listarCargosPorUO(int idSedeDestino) {
+        return(List<Cargo>) cargoRepository.listarCargosPorUO(idSedeDestino);
     }
 
 }

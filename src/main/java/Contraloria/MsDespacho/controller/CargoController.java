@@ -110,6 +110,31 @@ public class CargoController {
         
     }
 
+    @GetMapping(ApiRoutes.LISTAR_RESUMEN_CARGOS_POR_UO)
+    public ResponseEntity<ApiResponse<?>> listarResumenCargosPorUO(){
+        
+        
+        List<Object> resumenCargos = cargoService.obtenerCantidadPorSedeDestino();
+
+
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                "", resumenCargos, Collections.emptyList()));
+        
+    }
+
+    @GetMapping(ApiRoutes.LISTAR_CARGOS_POR_UO)
+    public ResponseEntity<ApiResponse<?>> listarCargosPorUO(@PathVariable int idSedeDestino ){
+        
+        
+        List<Cargo> cargos = cargoService.listarCargosPorUO(idSedeDestino);
+
+
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                "", cargos, Collections.emptyList()));
+        
+    }
+
+
 
     @PostMapping(ApiRoutes.CREAR_CARGO)
     public ResponseEntity<ApiResponse<?>> crearCargo(@Valid @RequestBody CreateCargoRequest request) throws NotFoundException {
