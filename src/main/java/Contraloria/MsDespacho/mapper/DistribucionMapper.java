@@ -17,6 +17,8 @@ import Contraloria.MsDespacho.model.DetalleCargoDistribucion;
 @Mapper(componentModel = "spring",uses = CargoMapper.class)
 public interface DistribucionMapper {
     
+    CargoDistribucionDto toDto(CargoDistribucion cargoDistribucion);
+
     @Mapping(source = "content", target = "items")
     @Mapping(source = "number", target = "page")
     @Mapping(source = "size", target = "rows")

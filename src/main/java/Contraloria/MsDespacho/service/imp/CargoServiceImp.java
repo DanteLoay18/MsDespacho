@@ -100,8 +100,13 @@ public class CargoServiceImp implements CargoService{
     }
 
     @Override
-    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento) {
-        return cargoRepository.findAllByParameters(idSedeDestino,numeroDocumento);
+    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin) {
+        return cargoRepository.findAllByParameters(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin);
     }
 
+
+    @Override
+    public Page<Cargo> findAllConParametrosPaginated(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin,PageRequest pageRequest) {
+        return cargoRepository.findAllByParametersPaginated(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin, pageRequest);
+    }
 }

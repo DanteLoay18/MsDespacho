@@ -1,6 +1,7 @@
 package Contraloria.MsDespacho.controller;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,9 +54,13 @@ public class CargoController {
 
     @GetMapping(ApiRoutes.LISTAR_CARGOS)
     public ResponseEntity<ApiResponse<?>> findAll(@RequestParam(required = false) Optional<Integer> idSedeDestino,
-                                                  @RequestParam(required = false) Optional<String> numeroDocumento) {
+                                                  @RequestParam(required = false) Optional<String> numeroDocumento,
+                                                  @RequestParam(required = false) Optional<Integer> tipoDocumento,
+                                                  @RequestParam(required = false) Optional<Integer> anyo,
+                                                  @RequestParam(required = false) Optional<Date> fechaInicio,
+                                                  @RequestParam(required = false) Optional<Date> fechaFin) {
         try {
-            List<Cargo> cargos = cargoService.findAllConParametros(idSedeDestino,numeroDocumento);
+            List<Cargo> cargos = cargoService.findAllConParametros(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin);
 
             List<CargoDto> cargosDto = cargos.stream()
                     .map(cargoMapper::toDto)
@@ -71,6 +76,29 @@ public class CargoController {
                     .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                             MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
         }
+    }
+
+    @GetMapping(ApiRoutes.LISTAR_CARGOS_PAGINADO)
+    public ResponseEntity<ApiResponse<?>> findAllPaginated(@RequestParam(required = false) Optional<Integer> idSedeDestino,
+                                                            @RequestParam(required = false) Optional<String> numeroDocumento,
+                                                            @RequestParam(required = false) Optional<Integer> tipoDocumento,
+                                                            @RequestParam(required = false) Optional<Integer> anyo,
+                                                            @RequestParam(required = false) Optional<Date> fechaInicio,
+                                                            @RequestParam(required = false) Optional<Date> fechaFin,
+                                                            @RequestParam(defaultValue = "0") int page, 
+                                                            @RequestParam(defaultValue = "10") int rows ){
+        
+        
+        PageRequest pageRequest = PageRequest.of(page, rows);
+
+        Page<Cargo> cargos = cargoService.findAllConParametrosPaginated(idSedeDestino, numeroDocumento,tipoDocumento,anyo,fechaInicio, fechaFin, pageRequest);
+
+        PaginatorResponse<CargoDto> cargosDto = cargoMapper.toPaginationDto(cargos);
+
+
+        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                "", cargosDto, Collections.emptyList()));
+        
     }
 
     @GetMapping(ApiRoutes.BUSCAR_DOCUMENTO_POR_ID)
@@ -94,22 +122,6 @@ public class CargoController {
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", cargoDto, Collections.emptyList()));
-        
-    }
-
-    @GetMapping(ApiRoutes.LISTAR_CARGOS_PAGINADO)
-    public ResponseEntity<ApiResponse<?>> findAllPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int rows ){
-        
-        
-        PageRequest pageRequest = PageRequest.of(page, rows);
-
-        Page<Cargo> cargos = cargoService.findAll(pageRequest);
-
-        PaginatorResponse<CargoDto> cargosDto = cargoMapper.toPaginationDto(cargos);
-
-
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                "", cargosDto, Collections.emptyList()));
         
     }
 

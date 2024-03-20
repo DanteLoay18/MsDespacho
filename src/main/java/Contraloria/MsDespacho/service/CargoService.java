@@ -1,5 +1,6 @@
 package Contraloria.MsDespacho.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +15,11 @@ public interface CargoService {
     public Cargo update (Cargo cargo);
     public boolean delete (Cargo cargo);
     public List<Cargo> findAll();
-    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento);
+    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin);
     public Page<Cargo> findAll(PageRequest pageRequest);
     public Cargo findById(int id) throws NotFoundException;
     public Cargo findByCodigoBarra(String codigoBarra) throws NotFoundException;
     public List<Object> obtenerCantidadPorSedeDestino();
     public List<Cargo> listarCargosPorUO(int idSedeDestino);
+     public Page<Cargo> findAllConParametrosPaginated(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin,PageRequest pageRequest);
 }

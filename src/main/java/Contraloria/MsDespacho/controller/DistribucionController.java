@@ -3,6 +3,7 @@ package Contraloria.MsDespacho.controller;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -89,13 +90,13 @@ public class DistribucionController {
         try {
             List<CargoDistribucion> cargoDistribucions = cargoDistribucionService.findAllConParametros(idSedeDestino,numeroCargo);
 
-            // List<CargoDto> cargosDto = cargoDistribucions.stream()
-            //         .map(cargoMapper::toDto)
-            //         .collect(Collectors.toList());
+            List<CargoDistribucionDto> cargoDistribucionDtos = cargoDistribucions.stream()
+                    .map(distribucionMapper::toDto)
+                    .collect(Collectors.toList());
 
          
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                    "", cargoDistribucions, Collections.emptyList()));
+                    "", cargoDistribucionDtos, Collections.emptyList()));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
