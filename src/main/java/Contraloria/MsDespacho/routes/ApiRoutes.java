@@ -33,5 +33,7 @@ public class ApiRoutes {
     public static final String ELIMINAR_CARGO = "/eliminar/{id}";
 
     public static final String ENDPOINT_DISTRIBUCION= "/api/v1/distribucion";
+    public static final String LISTAR_DISTRIBUCION = "/listar-distribucion";
+    public static final String LISTAR_DISTRIBUCION_PAGINADO = "/listar-distribucion-paginado";
     public static final String CREAR_DISTRIBUCION = "/crear-distribucion";
 }

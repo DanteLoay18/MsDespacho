@@ -1,18 +1,26 @@
 package Contraloria.MsDespacho.controller;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Contraloria.MsDespacho.constants.MensajesParametrizados;
 import Contraloria.MsDespacho.dto.ApiResponse;
+import Contraloria.MsDespacho.dto.Distribucion.CargoDistribucionDto;
 import Contraloria.MsDespacho.dto.Distribucion.CreateDistribucionRequest;
+import Contraloria.MsDespacho.dto.Paginator.PaginatorResponse;
 import Contraloria.MsDespacho.exception.NotFoundException;
 import Contraloria.MsDespacho.mapper.DistribucionMapper;
 import Contraloria.MsDespacho.model.Cargo;
@@ -56,8 +64,6 @@ public class DistribucionController {
 
             for (int cargoId : request.getCargos()) {
                 
-                System.out.println("Cargooooo id "+cargoId);
-
                 Cargo cargoEncontrado = cargoService.findById(cargoId);
 
                 DetalleCargoDistribucion detalleCargoDistribucion = distribucionMapper.createRequestToDetalleCargoDistribucionEntity(cargoEncontrado, cargoDistribucionCreado);
@@ -76,6 +82,52 @@ public class DistribucionController {
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO,null ,Collections.emptyList()));
         
     }   
+
+    @GetMapping(ApiRoutes.LISTAR_DISTRIBUCION)
+    public ResponseEntity<ApiResponse<?>> findAll(@RequestParam(required = false) Optional<Integer> numeroCargo,
+                                                  @RequestParam(required = false) Optional<Integer> idSedeDestino) {
+        try {
+            List<CargoDistribucion> cargoDistribucions = cargoDistribucionService.findAllConParametros(idSedeDestino,numeroCargo);
+
+            // List<CargoDto> cargosDto = cargoDistribucions.stream()
+            //         .map(cargoMapper::toDto)
+            //         .collect(Collectors.toList());
+
+         
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                    "", cargoDistribucions, Collections.emptyList()));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+        }
+    }
+
+    @GetMapping(ApiRoutes.LISTAR_DISTRIBUCION_PAGINADO)
+    public ResponseEntity<ApiResponse<?>> findAllPaginado(@RequestParam(required = false) Optional<Integer> numeroCargo,
+                                                          @RequestParam(required = false) Optional<Integer> idSedeDestino,
+                                                          @RequestParam(defaultValue = "0") int page, 
+                                                          @RequestParam(defaultValue = "10") int rows ) {
+        try {
+            PageRequest pageRequest = PageRequest.of(page, rows);
+
+            Page<CargoDistribucion> cargoDistribucions = cargoDistribucionService.findAllConParametrosPaginado(idSedeDestino,numeroCargo,pageRequest);
+
+            PaginatorResponse<CargoDistribucionDto> cargosDto = distribucionMapper.toPaginationDto(cargoDistribucions);
+        
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                    "", cargosDto, Collections.emptyList()));
+
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+        }
+    }
+
+
+
+
 
     
 }

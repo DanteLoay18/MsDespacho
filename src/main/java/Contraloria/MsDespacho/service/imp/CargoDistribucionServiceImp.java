@@ -64,4 +64,16 @@ public class CargoDistribucionServiceImp implements CargoDistribucionService{
        
         return model.get();
     }
+
+    
+    @Override
+    public List<CargoDistribucion> findAllConParametros(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo) {
+        return cargoDistribucionRepository.findAllByParameters(idSedeDestino,numeroCargo);
+    }
+
+    @Override
+    public Page<CargoDistribucion> findAllConParametrosPaginado(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo,PageRequest pageRequest){
+
+        return cargoDistribucionRepository.findAllByParameters(idSedeDestino, numeroCargo,pageRequest);
+    }
 }

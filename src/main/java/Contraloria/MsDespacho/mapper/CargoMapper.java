@@ -3,6 +3,7 @@ package Contraloria.MsDespacho.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 
 import Contraloria.MsDespacho.dto.Cargo.CargoDto;
@@ -13,6 +14,9 @@ import Contraloria.MsDespacho.model.Cargo;
 
 @Mapper(componentModel = "spring")
 public interface CargoMapper {
+
+    
+    CargoMapper INSTANCE = Mappers.getMapper(CargoMapper.class);
 
     CargoDto toDto(Cargo cargo);
 

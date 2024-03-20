@@ -1,8 +1,10 @@
 package Contraloria.MsDespacho.model;
 
 import Contraloria.MsDespacho.model.base.BaseModel;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +12,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -32,4 +36,10 @@ public class CargoDistribucion extends BaseModel{
     
     @Column(name = "idSedeDestino", nullable = true)
     public int idSedeDestino;
+
+    @OneToMany(mappedBy = "cargoDistribucion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleCargoDistribucion> cargos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "cargoDistribucion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CargoAdicional> cargosAdicionales = new ArrayList<>();
 }

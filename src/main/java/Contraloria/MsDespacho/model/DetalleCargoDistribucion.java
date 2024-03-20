@@ -35,5 +35,4 @@ public class DetalleCargoDistribucion extends BaseModel{
 
 
 
-
 }
