@@ -2,6 +2,7 @@ package Contraloria.MsDespacho.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,11 @@ public class CargoController {
     
 
     @GetMapping(ApiRoutes.LISTAR_CARGOS)
-    public ResponseEntity<ApiResponse<?>> findAll() {
+    public ResponseEntity<ApiResponse<?>> findAll(@RequestParam(required = false) Optional<Integer> idSedeDestino,
+                                                  @RequestParam(required = false) Optional<String> numeroDocumento) {
         try {
-            List<Cargo> cargos = cargoService.findAll();
+            List<Cargo> cargos = cargoService.findAllConParametros(idSedeDestino,numeroDocumento);
 
-            System.out.println(cargos);
             List<CargoDto> cargosDto = cargos.stream()
                     .map(cargoMapper::toDto)
                     .collect(Collectors.toList());
@@ -64,6 +65,8 @@ public class CargoController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", cargosDto, Collections.emptyList()));
         } catch (Exception ex) {
+            System.out.println(ex);
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                             MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));

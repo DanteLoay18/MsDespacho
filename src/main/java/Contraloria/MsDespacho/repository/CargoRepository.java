@@ -21,4 +21,10 @@ public interface CargoRepository extends JpaRepository<Cargo, Integer>{
     @Query("SELECT u FROM Cargo u WHERE u.idSedeDestino = :idSedeDestino")
     List<Cargo> listarCargosPorUO(@Param("idSedeDestino") int idSedeDestino);
 
+    @Query("SELECT c FROM Cargo c WHERE " +
+            "(:idSedeDestino IS NULL OR c.idSedeDestino = :idSedeDestino) AND " +
+            "(:numeroDocumento IS NULL OR c.documento.numeroDocumento = :numeroDocumento)")
+    List<Cargo> findAllByParameters(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento);
+
+    
 }

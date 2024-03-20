@@ -99,4 +99,9 @@ public class CargoServiceImp implements CargoService{
         return(List<Cargo>) cargoRepository.listarCargosPorUO(idSedeDestino);
     }
 
+    @Override
+    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento) {
+        return cargoRepository.findAllByParameters(idSedeDestino,numeroDocumento);
+    }
+
 }

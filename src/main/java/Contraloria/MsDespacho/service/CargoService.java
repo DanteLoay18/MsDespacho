@@ -1,6 +1,7 @@
 package Contraloria.MsDespacho.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,7 @@ public interface CargoService {
     public Cargo update (Cargo cargo);
     public boolean delete (Cargo cargo);
     public List<Cargo> findAll();
+    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento);
     public Page<Cargo> findAll(PageRequest pageRequest);
     public Cargo findById(int id) throws NotFoundException;
     public Cargo findByCodigoBarra(String codigoBarra) throws NotFoundException;
