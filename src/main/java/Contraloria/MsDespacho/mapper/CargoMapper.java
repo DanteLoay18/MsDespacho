@@ -2,6 +2,7 @@ package Contraloria.MsDespacho.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
@@ -41,12 +42,14 @@ public interface CargoMapper {
     @Mappings({
         @Mapping(target = "id", ignore = true),
         @Mapping(target = "esEliminado", ignore = true),
+        @Mapping(target = "usuarioCreacion", ignore = true),
+        @Mapping(target = "fechaCreacion", ignore = true),
         @Mapping(target = "fechaModificacion", expression = "java(new java.util.Date())"),
         @Mapping(target = "usuarioModificacion", expression = "java(obtenerUsuarioActual())"),
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
-    Cargo updateRequestToEntity(UpdateCargoRequest updateCargoRequest);
+    void updateRequestToEntity(@MappingTarget Cargo entity,UpdateCargoRequest updateCargoRequest);
 
 
     default String obtenerUsuarioActual() {

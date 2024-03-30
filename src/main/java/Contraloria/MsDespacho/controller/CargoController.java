@@ -178,17 +178,17 @@ public class CargoController {
             request.setDocumento(documento);
         }
 
-        cargo = cargoMapper.updateRequestToEntity(request);
+        cargoMapper.updateRequestToEntity(cargo,request);
 
         cargoService.update(cargo);
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                                                    MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, cargo, Collections.emptyList() ));
+                                                    MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
         
     }
 
 
-    @DeleteMapping(ApiRoutes.ENDPOINT_CARGO)
+    @DeleteMapping(ApiRoutes.ELIMINAR_CARGO)
     public ResponseEntity<ApiResponse<?>> delete(@PathVariable int id)  throws NotFoundException{
         
             Cargo cargo = cargoService.findById(id);

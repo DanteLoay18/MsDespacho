@@ -90,8 +90,8 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse<?>> updateUsuario(@Valid @RequestBody UpdateUsuarioRequest request)  throws NotFoundException{
         
         Usuario usuario = usuarioService.findById(request.getId());
-
-        usuario = usuarioMapper.updateRequestToEntity(request);
+        
+        usuarioMapper.updateRequestToEntity(usuario, request);
 
         usuarioService.update(usuario);
 

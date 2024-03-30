@@ -2,6 +2,7 @@ package Contraloria.MsDespacho.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 import Contraloria.MsDespacho.dto.Usuario.CreateUsuarioRequest;
@@ -35,7 +36,7 @@ public interface UsuarioMapper{
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
-    Usuario updateRequestToEntity(UpdateUsuarioRequest updateUsuarioRequest);
+    void updateRequestToEntity(@MappingTarget Usuario entity, UpdateUsuarioRequest updateUsuarioRequest);
 
     default String obtenerUsuarioActual() {
         return "UsuarioActual";

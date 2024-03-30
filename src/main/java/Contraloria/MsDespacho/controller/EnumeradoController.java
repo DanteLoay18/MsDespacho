@@ -104,7 +104,7 @@ public class EnumeradoController {
     }
 
     @PutMapping(ApiRoutes.ACTUALIZAR_ENUMERADO)
-    public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateEnumeradoRequest request)  throws NotFoundException{
+    public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateEnumeradoRequest request) throws NotFoundException{
         
         Enumerado enumerado = enumeradoService.findById(request.getId());
 
@@ -114,7 +114,7 @@ public class EnumeradoController {
             request.setPadre(enumeradoPadre);
         }
 
-        enumerado = enumeradoMapper.updateRequestToEntity(request);
+        enumeradoMapper.updateRequestToEntity(enumerado,request);
 
         enumeradoService.update(enumerado);
 

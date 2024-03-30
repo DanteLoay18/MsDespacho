@@ -2,6 +2,7 @@ package Contraloria.MsDespacho.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
 import Contraloria.MsDespacho.dto.Enumerado.CreateEnumeradoRequest;
@@ -38,7 +39,7 @@ public interface EnumeradoMapper {
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
-    Enumerado updateRequestToEntity(UpdateEnumeradoRequest updateEnumeradoRequest);
+    void updateRequestToEntity(@MappingTarget Enumerado entity,UpdateEnumeradoRequest updateEnumeradoRequest);
 
     default String obtenerUsuarioActual() {
         return "UsuarioActual";
