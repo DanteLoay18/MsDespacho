@@ -36,4 +36,12 @@ public class ApiRoutes {
     public static final String LISTAR_DISTRIBUCION = "/listar-distribucion";
     public static final String LISTAR_DISTRIBUCION_PAGINADO = "/listar-distribucion-paginado";
     public static final String CREAR_DISTRIBUCION = "/crear-distribucion";
+
+    public static final String ENDPOINT_CARGODEVOLUCION= "/api/v1/cargo-devolucion";
+    public static final String LISTAR_CARGOSDEVOLUCION = "/listar-cargos-devolucion";
+    public static final String BUSCAR_CARGOSDEVOLUCION_POR_ID = "/buscarPorId/{id}";
+    public static final String LISTAR_CARGOSDEVOLUCION_PAGINADO = "/listar-cargos-devolucion-paginado";
+    public static final String CREAR_CARGODISTRIBUCION = "/crear";
+    public static final String ACTUALIZAR_CARGODISTRIBUCION = "/actualizar";
+    public static final String ELIMINAR_CARGODISTRIBUCION = "/eliminar/{id}";
 }

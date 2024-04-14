@@ -17,12 +17,12 @@ import Contraloria.MsDespacho.model.base.BaseModel;
 
 
 @Entity
-@Table(name = "DOCUMENTOS")
+@Table(name = "MGDE_DOCUMENTOS")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE DOCUMENTOS SET ES_ELIMINADO = 1 WHERE ID = ?")
+@SQLDelete(sql = "UPDATE MGDE_DOCUMENTOS SET ES_ELIMINADO = 1 WHERE ID = ?")
 @SQLRestriction(value = "ES_ELIMINADO = 0")
 public class Documento extends BaseModel{
 

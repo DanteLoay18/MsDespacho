@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -59,12 +60,15 @@ public class DistribucionController {
     @PostMapping(ApiRoutes.CREAR_DISTRIBUCION)
     public ResponseEntity<ApiResponse<?>> crearDistribucion(@Valid @RequestBody CreateDistribucionRequest request) throws NotFoundException{
             
+        try{
             CargoDistribucion cargoDistribucion = distribucionMapper.createRequestToDistribucionEntity(request);
 
             CargoDistribucion cargoDistribucionCreado = cargoDistribucionService.add(cargoDistribucion);
+        
 
             for (int cargoId : request.getCargos()) {
-                
+
+                             
                 Cargo cargoEncontrado = cargoService.findById(cargoId);
 
                 DetalleCargoDistribucion detalleCargoDistribucion = distribucionMapper.createRequestToDetalleCargoDistribucionEntity(cargoEncontrado, cargoDistribucionCreado);
@@ -81,6 +85,13 @@ public class DistribucionController {
             }
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO,null ,Collections.emptyList()));
+        }catch(ConstraintViolationException ex){
+            System.out.println(ex.getConstraintName());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+        }
+            
         
     }   
 

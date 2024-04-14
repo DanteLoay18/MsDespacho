@@ -8,6 +8,9 @@ import lombok.Data;
 
 @Data
 public class CargoDistribucionDto {
+
+    int id;
+
     public int numeroCargo;
 
     public Date fechaCargo;

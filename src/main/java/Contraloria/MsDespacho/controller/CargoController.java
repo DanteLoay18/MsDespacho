@@ -101,7 +101,7 @@ public class CargoController {
         
     }
 
-    @GetMapping(ApiRoutes.BUSCAR_DOCUMENTO_POR_ID)
+    @GetMapping(ApiRoutes.BUSCAR_CARGO_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
         
         Cargo cargo = cargoService.findById(id);

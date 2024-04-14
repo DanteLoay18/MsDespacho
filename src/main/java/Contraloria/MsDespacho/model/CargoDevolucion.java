@@ -1,6 +1,4 @@
 package Contraloria.MsDespacho.model;
-
-import Contraloria.MsDespacho.model.base.BaseModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -12,23 +10,30 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
-
-
+import Contraloria.MsDespacho.model.base.BaseModel;
+import java.sql.Date;
 
 @Entity
-@Table(name = "MGDE_CARGOADICIONAL")
+@Table(name = "MGDE_CARGODEVOLUCION")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE MGDE_CARGOADICIONAL SET ES_ELIMINADO = 1 WHERE ID = ?")
+@SQLDelete(sql = "UPDATE MGDE_CARGODEVOLUCION SET ES_ELIMINADO = 1 WHERE ID = ?")
 @SQLRestriction(value = "ES_ELIMINADO = 0")
-public class CargoAdicional extends BaseModel{
+public class CargoDevolucion extends BaseModel{
     
-    @Column(name = "numeroDocumento", nullable = true, length = 100)
-    public String numeroDocumento;
 
     @ManyToOne
     @JoinColumn(name = "idCargoDistribucion", nullable = true)
     CargoDistribucion cargoDistribucion;
-}   
+
+    @Column(name = "idUsuarioRecibe", nullable = true)
+    public int idUsuarioRecibe;
+
+    @Column(name = "idSedeDestino", nullable = true)
+    public int idSedeDestino;
+
+    @Column(name = "fechaDevolucion", nullable = true)
+    public Date fechaDevolucion;
+}
