@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 
 import Contraloria.MsDespacho.exception.NotFoundException;
 import Contraloria.MsDespacho.model.Cargo;
@@ -100,13 +102,30 @@ public class CargoServiceImp implements CargoService{
     }
 
     @Override
-    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin) {
-        return cargoRepository.findAllByParameters(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin);
+    public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin,Optional<String> fieldName,Optional<Boolean> ascending) {
+        
+        if(fieldName.isPresent()){
+            Sort sort = ascending.get() ? Sort.by(fieldName.get()).ascending() : Sort.by(fieldName.get()).descending();
+
+            return cargoRepository.findAllByParameters(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin, sort);
+        }
+       
+
+        return cargoRepository.findAllByParameters(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin, null);
     }
 
 
     @Override
-    public Page<Cargo> findAllConParametrosPaginated(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin,PageRequest pageRequest) {
+    public Page<Cargo> findAllConParametrosPaginated(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin,PageRequest pageRequest, Optional<String> fieldName, Optional<Boolean> ascending) {
+       
+        if(fieldName.isPresent()){
+            Sort sort = ascending.get() ? Sort.by(fieldName.get()).ascending() : Sort.by(fieldName.get()).descending();
+            
+            Pageable pageable = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), sort);
+
+            return cargoRepository.findAllByParametersPaginated(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin, pageable);
+        }
+       
         return cargoRepository.findAllByParametersPaginated(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin, pageRequest);
     }
 }

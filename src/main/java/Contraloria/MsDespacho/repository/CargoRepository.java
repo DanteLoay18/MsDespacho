@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Sort;
 
 import Contraloria.MsDespacho.model.Cargo;
 
@@ -32,7 +33,7 @@ public interface CargoRepository extends JpaRepository<Cargo, Integer>{
             "(:anyo IS NULL OR YEAR(c.documento.fechaDocumento) = :anyo) AND "+
             "(:fechaInicio IS NULL OR c.fechaRetorno >= :fechaInicio) AND " +
             "(:fechaFin IS NULL OR c.fechaRetorno <= :fechaFin)")
-    List<Cargo> findAllByParameters(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin);
+    List<Cargo> findAllByParameters(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin, Sort sort);
 
     @Query("SELECT c FROM Cargo c WHERE " +
             "(:idSedeDestino IS NULL OR c.idSedeDestino = :idSedeDestino) AND " +
@@ -41,7 +42,7 @@ public interface CargoRepository extends JpaRepository<Cargo, Integer>{
             "(:anyo IS NULL OR YEAR(c.documento.fechaDocumento) = :anyo) AND "+
             "(:fechaInicio IS NULL OR c.fechaRetorno >= :fechaInicio) AND " +
             "(:fechaFin IS NULL OR c.fechaRetorno <= :fechaFin)")
-    Page<Cargo> findAllByParametersPaginated(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin, Pageable pageable );
+    Page<Cargo> findAllByParametersPaginated(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin, Pageable pageable);
 
     
-}
+}                                                      

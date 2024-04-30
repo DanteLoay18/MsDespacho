@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.domain.Sort;
+
+
 
 import Contraloria.MsDespacho.model.CargoDistribucion;
 
@@ -17,13 +20,11 @@ public interface CargoDistribucionRepository extends JpaRepository<CargoDistribu
 
     @Query("SELECT c FROM CargoDistribucion c WHERE " +
             "(:idSedeDestino IS NULL OR c.idSedeDestino = :idSedeDestino) AND " +
-            "(:numeroCargo IS NULL OR c.numeroCargo = :numeroCargo) " +
-            "ORDER BY c.fechaCreacion DESC")
-    List<CargoDistribucion> findAllByParameters(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo);
+            "(:numeroCargo IS NULL OR c.numeroCargo = :numeroCargo) ")
+    List<CargoDistribucion> findAllByParameters(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo, Sort sort);
 
     @Query("SELECT c FROM CargoDistribucion c WHERE " +
             "(:idSedeDestino IS NULL OR c.idSedeDestino = :idSedeDestino) AND " +
-            "(:numeroCargo IS NULL OR c.numeroCargo = :numeroCargo) " +
-            "ORDER BY c.fechaCreacion DESC")
-    Page<CargoDistribucion> findAllByParameters(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo, Pageable pageable );
+            "(:numeroCargo IS NULL OR c.numeroCargo = :numeroCargo) ")
+    Page<CargoDistribucion> findAllByParametersPaginated(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo, Pageable pageable);
 }

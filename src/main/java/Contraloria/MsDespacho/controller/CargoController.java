@@ -58,9 +58,12 @@ public class CargoController {
                                                   @RequestParam(required = false) Optional<Integer> tipoDocumento,
                                                   @RequestParam(required = false) Optional<Integer> anyo,
                                                   @RequestParam(required = false) Optional<Date> fechaInicio,
-                                                  @RequestParam(required = false) Optional<Date> fechaFin) {
+                                                  @RequestParam(required = false) Optional<Date> fechaFin,
+                                                  @RequestParam(required = false) Optional<String> fieldName,
+                                                  @RequestParam(required = false) Optional<Boolean> ascending
+                                                  ) {
         try {
-            List<Cargo> cargos = cargoService.findAllConParametros(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin);
+            List<Cargo> cargos = cargoService.findAllConParametros(idSedeDestino,numeroDocumento,tipoDocumento,anyo,fechaInicio,fechaFin, fieldName, ascending);
 
             List<CargoDto> cargosDto = cargos.stream()
                     .map(cargoMapper::toDto)
@@ -85,13 +88,16 @@ public class CargoController {
                                                             @RequestParam(required = false) Optional<Integer> anyo,
                                                             @RequestParam(required = false) Optional<Date> fechaInicio,
                                                             @RequestParam(required = false) Optional<Date> fechaFin,
+                                                            @RequestParam(required = false) Optional<String> fieldName,
+                                                            @RequestParam(required = false) Optional<Boolean> ascending,
                                                             @RequestParam(defaultValue = "0") int page, 
-                                                            @RequestParam(defaultValue = "10") int rows ){
+                                                            @RequestParam(defaultValue = "10") int rows )
+                                                            {
         
         
         PageRequest pageRequest = PageRequest.of(page, rows);
 
-        Page<Cargo> cargos = cargoService.findAllConParametrosPaginated(idSedeDestino, numeroDocumento,tipoDocumento,anyo,fechaInicio, fechaFin, pageRequest);
+        Page<Cargo> cargos = cargoService.findAllConParametrosPaginated(idSedeDestino, numeroDocumento,tipoDocumento,anyo,fechaInicio, fechaFin, pageRequest, fieldName, ascending);
 
         PaginatorResponse<CargoDto> cargosDto = cargoMapper.toPaginationDto(cargos);
 
