@@ -58,5 +58,4 @@ public class Documento extends BaseModel{
 
     @Column(name = "notas", nullable = false, length = 500)
     String notas;
-
 }

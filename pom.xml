@@ -51,6 +51,7 @@
         	<artifactId>mapstruct</artifactId>
         	<version>1.5.5.Final</version>
     	</dependency>
+		
 		<!-- Swagger -->
 
 		<dependency>
@@ -63,6 +64,14 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- H2 Database Base de daots en Memoria -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.200</version>
+			<scope>test</scope>
 		</dependency>
 		
 	</dependencies>

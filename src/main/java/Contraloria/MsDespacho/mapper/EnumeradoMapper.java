@@ -13,7 +13,6 @@ import Contraloria.MsDespacho.model.Enumerado;
 @Mapper(componentModel = "spring")
 public interface EnumeradoMapper {
     
-    
     EnumeradoDto toDto(Enumerado enumerado);
 
 
