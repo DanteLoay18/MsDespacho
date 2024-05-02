@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+
+
 
 import Contraloria.MsDespacho.exception.NotFoundException;
 import Contraloria.MsDespacho.model.CargoDistribucion;
@@ -67,13 +71,30 @@ public class CargoDistribucionServiceImp implements CargoDistribucionService{
 
     
     @Override
-    public List<CargoDistribucion> findAllConParametros(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo) {
-        return cargoDistribucionRepository.findAllByParameters(idSedeDestino,numeroCargo);
+    public List<CargoDistribucion> findAllConParametros(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo, Optional<String> fieldName,Optional<Boolean> ascending) {
+        if(fieldName.isPresent()){
+            Sort sort = ascending.get() ? Sort.by(fieldName.get()).ascending() : Sort.by(fieldName.get()).descending();
+
+            return cargoDistribucionRepository.findAllByParameters(idSedeDestino,numeroCargo, sort);
+        }
+        
+        Sort sort =  Sort.by("fechaCreacion").descending();
+
+        return cargoDistribucionRepository.findAllByParameters(idSedeDestino,numeroCargo, sort);
     }
 
     @Override
-    public Page<CargoDistribucion> findAllConParametrosPaginado(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo,PageRequest pageRequest){
+    public Page<CargoDistribucion> findAllConParametrosPaginado(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo,PageRequest pageRequest, Optional<String> fieldName,Optional<Boolean> ascending){
 
-        return cargoDistribucionRepository.findAllByParameters(idSedeDestino, numeroCargo,pageRequest);
+        if(fieldName.isPresent()){
+            Sort sort = ascending.get() ? Sort.by(fieldName.get()).ascending() : Sort.by(fieldName.get()).descending();
+
+            Pageable pageable = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), sort);
+            return cargoDistribucionRepository.findAllByParametersPaginated(idSedeDestino,numeroCargo, pageable);
+        }
+
+        Sort sort =  Sort.by("fechaCreacion").descending();
+        Pageable pageable = PageRequest.of(pageRequest.getPageNumber(), pageRequest.getPageSize(), sort);
+        return cargoDistribucionRepository.findAllByParametersPaginated(idSedeDestino, numeroCargo, pageable);
     }
 }

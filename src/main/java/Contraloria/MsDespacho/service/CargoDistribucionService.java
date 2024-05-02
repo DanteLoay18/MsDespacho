@@ -16,6 +16,6 @@ public interface CargoDistribucionService {
     public List<CargoDistribucion> findAll();
     public Page<CargoDistribucion> findAll(PageRequest pageRequest);
     public CargoDistribucion findById(int id) throws NotFoundException;
-    public List<CargoDistribucion> findAllConParametros(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo);
-    public Page<CargoDistribucion> findAllConParametrosPaginado(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo,PageRequest pageRequest);
+    public List<CargoDistribucion> findAllConParametros(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo, Optional<String> fieldName,Optional<Boolean> ascending);
+    public Page<CargoDistribucion> findAllConParametrosPaginado(Optional<Integer> idSedeDestino, Optional<Integer> numeroCargo,PageRequest pageRequest, Optional<String> fieldName,Optional<Boolean> ascending);
 }

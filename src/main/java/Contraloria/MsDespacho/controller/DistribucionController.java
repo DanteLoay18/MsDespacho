@@ -97,9 +97,12 @@ public class DistribucionController {
 
     @GetMapping(ApiRoutes.LISTAR_DISTRIBUCION)
     public ResponseEntity<ApiResponse<?>> findAll(@RequestParam(required = false) Optional<Integer> numeroCargo,
-                                                  @RequestParam(required = false) Optional<Integer> idSedeDestino) {
+                                                  @RequestParam(required = false) Optional<Integer> idSedeDestino,
+                                                  @RequestParam(required = false) Optional<String> fieldName,
+                                                  @RequestParam(required = false) Optional<Boolean> ascending
+                                                  ) {
         try {
-            List<CargoDistribucion> cargoDistribucions = cargoDistribucionService.findAllConParametros(idSedeDestino,numeroCargo);
+            List<CargoDistribucion> cargoDistribucions = cargoDistribucionService.findAllConParametros(idSedeDestino,numeroCargo, fieldName, ascending);
 
             List<CargoDistribucionDto> cargoDistribucionDtos = cargoDistribucions.stream()
                     .map(distribucionMapper::toDto)
@@ -118,12 +121,14 @@ public class DistribucionController {
     @GetMapping(ApiRoutes.LISTAR_DISTRIBUCION_PAGINADO)
     public ResponseEntity<ApiResponse<?>> findAllPaginado(@RequestParam(required = false) Optional<Integer> numeroCargo,
                                                           @RequestParam(required = false) Optional<Integer> idSedeDestino,
+                                                          @RequestParam(required = false) Optional<String> fieldName,
+                                                          @RequestParam(required = false) Optional<Boolean> ascending,
                                                           @RequestParam(defaultValue = "0") int page, 
                                                           @RequestParam(defaultValue = "10") int rows ) {
         try {
             PageRequest pageRequest = PageRequest.of(page, rows);
 
-            Page<CargoDistribucion> cargoDistribucions = cargoDistribucionService.findAllConParametrosPaginado(idSedeDestino,numeroCargo,pageRequest);
+            Page<CargoDistribucion> cargoDistribucions = cargoDistribucionService.findAllConParametrosPaginado(idSedeDestino,numeroCargo,pageRequest, fieldName, ascending);
 
             PaginatorResponse<CargoDistribucionDto> cargosDto = distribucionMapper.toPaginationDto(cargoDistribucions);
         
