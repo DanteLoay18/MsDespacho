@@ -15,12 +15,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "MGDE_ENTREGAS")
+@Table(name = "MGDE_ENTREGA")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE MGDE_ENTREGAS SET ES_ELIMINADO = 1 WHERE ID = ?")
+@SQLDelete(sql = "UPDATE MGDE_ENTREGA SET ES_ELIMINADO = 1 WHERE ID = ?")
 @SQLRestriction(value = "ES_ELIMINADO = 0")
 public class Entrega extends BaseModel{
     

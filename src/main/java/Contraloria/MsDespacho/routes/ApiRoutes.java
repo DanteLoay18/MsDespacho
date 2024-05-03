@@ -44,4 +44,12 @@ public class ApiRoutes {
     public static final String CREAR_CARGODISTRIBUCION = "/crear";
     public static final String ACTUALIZAR_CARGODISTRIBUCION = "/actualizar";
     public static final String ELIMINAR_CARGODISTRIBUCION = "/eliminar/{id}";
+
+
+    public static final String ENDPOINT_PROVEEDOR = "/api/v1/proveedor";
+    public static final String LISTAR_PROVEEDORS = "/listar-proveedors";
+    public static final String CREAR_PROVEEDOR = "/crear";
+    public static final String BUSCAR_PROVEEDOR_POR_ID = "/buscarPorId/{id}";
+    public static final String ACTUALIZAR_PROVEEDOR = "/actualizar";
+    public static final String ELIMINAR_PROVEEDOR = "/eliminar/{id}";
 }

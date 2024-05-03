@@ -15,12 +15,12 @@ import org.hibernate.annotations.SQLRestriction;
 
 
 @Entity
-@Table(name = "MGDE_ENUMERADOS")
+@Table(name = "MGDE_ENUMERADO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE MGDE_ENUMERADOS SET ES_ELIMINADO = 1 WHERE ID = ?")
+@SQLDelete(sql = "UPDATE MGDE_ENUMERADO SET ES_ELIMINADO = 1 WHERE ID = ?")
 @SQLRestriction(value = "ES_ELIMINADO = 0")
 public class Enumerado extends BaseModel{
     
