@@ -52,4 +52,20 @@ public class ApiRoutes {
     public static final String BUSCAR_PROVEEDOR_POR_ID = "/buscarPorId/{id}";
     public static final String ACTUALIZAR_PROVEEDOR = "/actualizar";
     public static final String ELIMINAR_PROVEEDOR = "/eliminar/{id}";
+
+    public static final String ENDPOINT_DATOSFINANCIEROS = "/api/v1/datosFinancieros";
+    public static final String LISTAR_DATOSFINANCIEROS = "/listar-datosFinancieros";
+    public static final String CREAR_DATOSFINANCIEROS = "/crear";
+    public static final String BUSCAR_DATOSFINANCIEROS_POR_ID = "/buscarPorId/{id}";
+    public static final String LISTAR_DATOSFINANCIEROS_POR_PADRE = "/listar-datosFinancieros-padre/{id}";
+    public static final String ACTUALIZAR_DATOSFINANCIEROS = "/actualizar";
+    public static final String ELIMINAR_DATOSFINANCIEROS = "/eliminar/{id}";
+
+    public static final String ENDPOINT_DATOSPRODUCTOS = "/api/v1/datosProductos";
+    public static final String LISTAR_DATOSPRODUCTOS = "/listar-datosProductos";
+    public static final String CREAR_DATOSPRODUCTOS = "/crear";
+    public static final String BUSCAR_DATOSPRODUCTOS_POR_ID = "/buscarPorId/{id}";
+    public static final String LISTAR_DATOSPRODUCTOS_POR_PADRE = "/listar-datosProductos-padre/{id}";
+    public static final String ACTUALIZAR_DATOSPRODUCTOS = "/actualizar";
+    public static final String ELIMINAR_DATOSPRODUCTOS = "/eliminar/{id}";
 }

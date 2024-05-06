@@ -18,39 +18,43 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Contraloria.MsDespacho.constants.MensajesParametrizados;
 import Contraloria.MsDespacho.dto.ApiResponse;
-import Contraloria.MsDespacho.dto.Proveedor.CreateProveedorRequest;
-import Contraloria.MsDespacho.dto.Proveedor.ProveedorDto;
-import Contraloria.MsDespacho.dto.Proveedor.UpdateProveedorRequest;
+import Contraloria.MsDespacho.dto.DatosFinancieros.CreateDatosFinancierosRequest;
+import Contraloria.MsDespacho.dto.DatosFinancieros.DatosFinancierosDto;
+import Contraloria.MsDespacho.dto.DatosFinancieros.UpdateDatosFinancierosRequest;
 import Contraloria.MsDespacho.exception.NotFoundException;
-import Contraloria.MsDespacho.mapper.ProveedorMapper;
+import Contraloria.MsDespacho.mapper.DatosFinancierosMapper;
+import Contraloria.MsDespacho.model.DatosFinancieros;
 import Contraloria.MsDespacho.model.Proveedor;
 import Contraloria.MsDespacho.routes.ApiRoutes;
+import Contraloria.MsDespacho.service.DatosFinancierosService;
 import Contraloria.MsDespacho.service.ProveedorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(ApiRoutes.ENDPOINT_PROVEEDOR)
-@Tag(name = "Proveedor")
-public class ProveedorController {
+@RequestMapping(ApiRoutes.ENDPOINT_DATOSFINANCIEROS)
+@Tag(name = "DatosFinancieros")
+public class DatosFinancierosController {
+    @Autowired
+    DatosFinancierosService datosFinancierosService;
 
     @Autowired
     ProveedorService proveedorService;
 
     @Autowired
-    ProveedorMapper proveedorMapper;
+    DatosFinancierosMapper datosFinancierosMapper;
 
-    @GetMapping(ApiRoutes.LISTAR_PROVEEDORS)
+    @GetMapping(ApiRoutes.LISTAR_DATOSFINANCIEROS)
     public ResponseEntity<ApiResponse<?>> getUsuarios() {
         try {
-            List<Proveedor> proveedors = proveedorService.findAll();
-            List<ProveedorDto> proveedorDtos = proveedors.stream()
-                    .map(proveedorMapper::toDto)
+            List<DatosFinancieros> datosFinancieross = datosFinancierosService.findAll();
+            List<DatosFinancierosDto> datosFinancierosDtos = datosFinancieross.stream()
+                    .map(datosFinancierosMapper::toDto)
                     .collect(Collectors.toList());
 
          
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                    "", proveedorDtos, Collections.emptyList()));
+                    "", datosFinancierosDtos, Collections.emptyList()));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -59,52 +63,51 @@ public class ProveedorController {
     }
 
 
-    @GetMapping(ApiRoutes.BUSCAR_PROVEEDOR_POR_ID)
+    @GetMapping(ApiRoutes.BUSCAR_DATOSFINANCIEROS_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
         
-        Proveedor proveedor = proveedorService.findById(id);
+        DatosFinancieros datosFinancieros = datosFinancierosService.findById(id);
 
-        ProveedorDto proveedorDto = proveedorMapper.toDto(proveedor);
+        DatosFinancierosDto datosFinancierosDto = datosFinancierosMapper.toDto(datosFinancieros);
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                "", proveedorDto, Collections.emptyList()));
+                "", datosFinancierosDto, Collections.emptyList()));
         
     }
 
-    @PostMapping(ApiRoutes.CREAR_PROVEEDOR)
-    public ResponseEntity<ApiResponse<?>> create(@Valid @RequestBody CreateProveedorRequest request) {
-        try {
-            Proveedor proveedor = proveedorMapper.createRequestToEntity(request);
+    @PostMapping(ApiRoutes.CREAR_DATOSFINANCIEROS)
+    public ResponseEntity<ApiResponse<?>> create(@Valid @RequestBody CreateDatosFinancierosRequest request) throws NotFoundException {
+            Proveedor proveedorEncontrado = proveedorService.findById(request.getIdProveedor());
 
-            proveedorService.add(proveedor);
+            request.setProveedor(proveedorEncontrado);
+
+            DatosFinancieros datosFinancieros = datosFinancierosMapper.createRequestToEntity(request);
+
+            datosFinancierosService.add(datosFinancieros);
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO, null,Collections.emptyList()));
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
-        }
+        
     }
 
-    @PutMapping(ApiRoutes.ACTUALIZAR_PROVEEDOR)
-    public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateProveedorRequest request)  throws NotFoundException{
+    @PutMapping(ApiRoutes.ACTUALIZAR_DATOSFINANCIEROS)
+    public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateDatosFinancierosRequest request)  throws NotFoundException{
         
-        Proveedor proveedor = proveedorService.findById(request.getId());
+        DatosFinancieros datosFinancieros = datosFinancierosService.findById(request.getId());
         
-        proveedorMapper.updateRequestToEntity(proveedor, request);
+        datosFinancierosMapper.updateRequestToEntity(datosFinancieros, request);
 
-        proveedorService.update(proveedor);
+        datosFinancierosService.update(datosFinancieros);
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                     MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
         
     }
 
-    @DeleteMapping(ApiRoutes.ELIMINAR_PROVEEDOR)
+    @DeleteMapping(ApiRoutes.ELIMINAR_DATOSFINANCIEROS)
     public ResponseEntity<ApiResponse<?>> deleteUsuario(@PathVariable int id)  throws NotFoundException{
         
-            Proveedor proveedor = proveedorService.findById(id);
+            DatosFinancieros datosFinancieros = datosFinancierosService.findById(id);
                     
-            proveedorService.delete(proveedor);
+            datosFinancierosService.delete(datosFinancieros);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));

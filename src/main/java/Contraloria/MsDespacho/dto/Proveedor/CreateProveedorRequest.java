@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CreateProveedorRequest {
+    
     @Min(value = 1, message = "El tipo proveedor debe ser un entero positivo")
     private int tipoProveedor;
     @Min(value = 1, message = "El tipo documento debe ser un entero positivo")
