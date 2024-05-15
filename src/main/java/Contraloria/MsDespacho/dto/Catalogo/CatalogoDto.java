@@ -1,9 +1,9 @@
-package Contraloria.MsDespacho.dto.Enumerado;
+package Contraloria.MsDespacho.dto.Catalogo;
 
 import lombok.Data;
 
 @Data
-public class EnumeradoDto {
+public class CatalogoDto {
 
     private Integer id;
 
@@ -11,7 +11,7 @@ public class EnumeradoDto {
 
     private String nombre;
 
-    private String abreviatura;
+    private String descripcion;
 
     private String valor;
     

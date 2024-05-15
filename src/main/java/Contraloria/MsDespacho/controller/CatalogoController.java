@@ -18,33 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Contraloria.MsDespacho.constants.MensajesParametrizados;
 import Contraloria.MsDespacho.dto.ApiResponse;
-import Contraloria.MsDespacho.dto.Enumerado.CreateEnumeradoRequest;
-import Contraloria.MsDespacho.dto.Enumerado.EnumeradoDto;
-import Contraloria.MsDespacho.dto.Enumerado.UpdateEnumeradoRequest;
+import Contraloria.MsDespacho.dto.Catalogo.CreateCatalogoRequest;
+import Contraloria.MsDespacho.dto.Catalogo.CatalogoDto;
+import Contraloria.MsDespacho.dto.Catalogo.UpdateCatalogoRequest;
 import Contraloria.MsDespacho.exception.NotFoundException;
-import Contraloria.MsDespacho.mapper.EnumeradoMapper;
-import Contraloria.MsDespacho.model.Enumerado;
+import Contraloria.MsDespacho.mapper.CatalogoMapper;
+import Contraloria.MsDespacho.model.Catalogo;
 import Contraloria.MsDespacho.routes.ApiRoutes;
-import Contraloria.MsDespacho.service.EnumeradoService;
+import Contraloria.MsDespacho.service.CatalogoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(ApiRoutes.ENDPOINT_ENUMERADO)
-@Tag(name = "Enumerado")
-public class EnumeradoController {
+@Tag(name = "Catalogo")
+public class CatalogoController {
 
     @Autowired
-    EnumeradoService enumeradoService;
+    CatalogoService enumeradoService;
 
     @Autowired
-    EnumeradoMapper enumeradoMapper;
+    CatalogoMapper enumeradoMapper;
 
     @GetMapping(ApiRoutes.LISTAR_ENUMERADOS)
-    public ResponseEntity<ApiResponse<?>> getEnumerados() {
+    public ResponseEntity<ApiResponse<?>> getCatalogos() {
         try {
-            List<Enumerado> enumerados = enumeradoService.findAll();
-            List<EnumeradoDto> enumeradosDto = enumerados.stream()
+            List<Catalogo> enumerados = enumeradoService.findAll();
+            List<CatalogoDto> enumeradosDto = enumerados.stream()
                     .map(enumeradoMapper::toDto)
                     .collect(Collectors.toList());
 
@@ -61,9 +61,9 @@ public class EnumeradoController {
     @GetMapping(ApiRoutes.BUSCAR_ENUMERADO_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
         
-        Enumerado enumerado = enumeradoService.findById(id);
+        Catalogo enumerado = enumeradoService.findById(id);
 
-        EnumeradoDto enumeradoDto = enumeradoMapper.toDto(enumerado);
+        CatalogoDto enumeradoDto = enumeradoMapper.toDto(enumerado);
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", enumeradoDto, Collections.emptyList()));
@@ -71,11 +71,11 @@ public class EnumeradoController {
     }
 
     @GetMapping(ApiRoutes.LISTAR_ENUMERADOS_POR_PADRE)
-    public ResponseEntity<ApiResponse<?>> getEnumeradosByPadre(@PathVariable int id) throws NotFoundException {
+    public ResponseEntity<ApiResponse<?>> getCatalogosByPadre(@PathVariable int id) throws NotFoundException {
         
-            List<Enumerado> enumerados = enumeradoService.findEnumeradosHijos(id);
+            List<Catalogo> enumerados = enumeradoService.findCatalogosHijos(id);
 
-            List<EnumeradoDto> enumeradosDto = enumerados.stream()
+            List<CatalogoDto> enumeradosDto = enumerados.stream()
                                 .map(enumeradoMapper::toDto)
                                 .collect(Collectors.toList());
 
@@ -86,15 +86,15 @@ public class EnumeradoController {
     }
 
     @PostMapping(ApiRoutes.CREAR_ENUMERADO)
-    public ResponseEntity<ApiResponse<?>> createEnumerado(@Valid @RequestBody CreateEnumeradoRequest request) throws NotFoundException {
+    public ResponseEntity<ApiResponse<?>> createCatalogo(@Valid @RequestBody CreateCatalogoRequest request) throws NotFoundException {
 
             if(request.getIdPadre() > 0){
-                Enumerado enumeradoPadre = enumeradoService.findById(request.getIdPadre());
+                Catalogo enumeradoPadre = enumeradoService.findById(request.getIdPadre());
 
                 request.setPadre(enumeradoPadre);
             }
             
-            Enumerado enumerado = enumeradoMapper.createRequestToEntity(request);
+            Catalogo enumerado = enumeradoMapper.createRequestToEntity(request);
 
             enumeradoService.add(enumerado);
 
@@ -104,12 +104,12 @@ public class EnumeradoController {
     }
 
     @PutMapping(ApiRoutes.ACTUALIZAR_ENUMERADO)
-    public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateEnumeradoRequest request) throws NotFoundException{
+    public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateCatalogoRequest request) throws NotFoundException{
         
-        Enumerado enumerado = enumeradoService.findById(request.getId());
+        Catalogo enumerado = enumeradoService.findById(request.getId());
 
         if(enumerado.getPadre() != request.getPadre()){
-            Enumerado enumeradoPadre = enumeradoService.findById(request.getIdPadre());
+            Catalogo enumeradoPadre = enumeradoService.findById(request.getIdPadre());
 
             request.setPadre(enumeradoPadre);
         }
@@ -126,7 +126,7 @@ public class EnumeradoController {
     @DeleteMapping(ApiRoutes.ELIMINAR_ENUMERADO)
     public ResponseEntity<ApiResponse<?>> delete(@PathVariable int id)  throws NotFoundException{
         
-            Enumerado enumerado = enumeradoService.findById(id);
+            Catalogo enumerado = enumeradoService.findById(id);
                     
             enumeradoService.delete(enumerado);
 

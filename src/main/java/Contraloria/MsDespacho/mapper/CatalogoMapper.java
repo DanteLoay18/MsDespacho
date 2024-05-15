@@ -5,15 +5,15 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
-import Contraloria.MsDespacho.dto.Enumerado.CreateEnumeradoRequest;
-import Contraloria.MsDespacho.dto.Enumerado.EnumeradoDto;
-import Contraloria.MsDespacho.dto.Enumerado.UpdateEnumeradoRequest;
-import Contraloria.MsDespacho.model.Enumerado;
+import Contraloria.MsDespacho.dto.Catalogo.CreateCatalogoRequest;
+import Contraloria.MsDespacho.dto.Catalogo.CatalogoDto;
+import Contraloria.MsDespacho.dto.Catalogo.UpdateCatalogoRequest;
+import Contraloria.MsDespacho.model.Catalogo;
 
 @Mapper(componentModel = "spring")
-public interface EnumeradoMapper {
+public interface CatalogoMapper {
     
-    EnumeradoDto toDto(Enumerado enumerado);
+    CatalogoDto toDto(Catalogo enumerado);
 
 
     @Mappings({
@@ -26,7 +26,7 @@ public interface EnumeradoMapper {
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
-    Enumerado createRequestToEntity(CreateEnumeradoRequest createEnumeradoRequest);
+    Catalogo createRequestToEntity(CreateCatalogoRequest createCatalogoRequest);
 
     @Mappings({
         @Mapping(target = "id", ignore = true),
@@ -38,7 +38,7 @@ public interface EnumeradoMapper {
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
-    void updateRequestToEntity(@MappingTarget Enumerado entity,UpdateEnumeradoRequest updateEnumeradoRequest);
+    void updateRequestToEntity(@MappingTarget Catalogo entity,UpdateCatalogoRequest updateCatalogoRequest);
 
     default String obtenerUsuarioActual() {
         return "UsuarioActual";

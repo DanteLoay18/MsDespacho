@@ -8,11 +8,11 @@ public class ApiRoutes {
     public static final String BUSCAR_USUARIO_POR_ID = "/buscarPorId/{id}";
     public static final String LISTAR_USUARIOS = "/listar-usuarios";
 
-    public static final String ENDPOINT_ENUMERADO = "/api/v1/enumerado";
-    public static final String LISTAR_ENUMERADOS = "/listar-enumerados";
+    public static final String ENDPOINT_ENUMERADO = "/api/v1/catalogo";
+    public static final String LISTAR_ENUMERADOS = "/listar-catalogos";
     public static final String CREAR_ENUMERADO = "/crear";
     public static final String BUSCAR_ENUMERADO_POR_ID = "/buscarPorId/{id}";
-    public static final String LISTAR_ENUMERADOS_POR_PADRE = "/listar-enumerados-padre/{id}";
+    public static final String LISTAR_ENUMERADOS_POR_PADRE = "/listar-catalogos-padre/{id}";
     public static final String ACTUALIZAR_ENUMERADO = "/actualizar";
     public static final String ELIMINAR_ENUMERADO = "/eliminar/{id}";
     
@@ -47,7 +47,7 @@ public class ApiRoutes {
 
 
     public static final String ENDPOINT_PROVEEDOR = "/api/v1/proveedor";
-    public static final String LISTAR_PROVEEDORS = "/listar-proveedors";
+    public static final String LISTAR_PROVEEDORS = "/listar-proveedores";
     public static final String CREAR_PROVEEDOR = "/crear";
     public static final String BUSCAR_PROVEEDOR_POR_ID = "/buscarPorId/{id}";
     public static final String ACTUALIZAR_PROVEEDOR = "/actualizar";
@@ -57,7 +57,6 @@ public class ApiRoutes {
     public static final String LISTAR_DATOSFINANCIEROS = "/listar-datosFinancieros";
     public static final String CREAR_DATOSFINANCIEROS = "/crear";
     public static final String BUSCAR_DATOSFINANCIEROS_POR_ID = "/buscarPorId/{id}";
-    public static final String LISTAR_DATOSFINANCIEROS_POR_PADRE = "/listar-datosFinancieros-padre/{id}";
     public static final String ACTUALIZAR_DATOSFINANCIEROS = "/actualizar";
     public static final String ELIMINAR_DATOSFINANCIEROS = "/eliminar/{id}";
 
@@ -65,7 +64,6 @@ public class ApiRoutes {
     public static final String LISTAR_DATOSPRODUCTOS = "/listar-datosProductos";
     public static final String CREAR_DATOSPRODUCTOS = "/crear";
     public static final String BUSCAR_DATOSPRODUCTOS_POR_ID = "/buscarPorId/{id}";
-    public static final String LISTAR_DATOSPRODUCTOS_POR_PADRE = "/listar-datosProductos-padre/{id}";
     public static final String ACTUALIZAR_DATOSPRODUCTOS = "/actualizar";
     public static final String ELIMINAR_DATOSPRODUCTOS = "/eliminar/{id}";
 }

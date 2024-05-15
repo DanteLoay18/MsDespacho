@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import Contraloria.MsDespacho.model.Enumerado;
+import Contraloria.MsDespacho.model.Catalogo;
 
 @Repository
-public interface EnumeradoRepository extends JpaRepository<Enumerado, Integer>{
-    @Query("SELECT u FROM Enumerado u WHERE u.padre.id = :id")
-    List<Enumerado> findAllHijos(@Param("id") int id);
+public interface CatalogoRepository extends JpaRepository<Catalogo, Integer>{
+    @Query("SELECT u FROM Catalogo u WHERE u.padre.id = :id")
+    List<Catalogo> findAllHijos(@Param("id") int id);
 }
