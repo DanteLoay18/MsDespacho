@@ -25,6 +25,7 @@ import Contraloria.MsDespacho.exception.NotFoundException;
 import Contraloria.MsDespacho.mapper.ProveedorMapper;
 import Contraloria.MsDespacho.model.Proveedor;
 import Contraloria.MsDespacho.routes.ApiRoutes;
+import Contraloria.MsDespacho.service.CatalogoService;
 import Contraloria.MsDespacho.service.ProveedorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -40,13 +41,36 @@ public class ProveedorController {
     @Autowired
     ProveedorMapper proveedorMapper;
 
+    @Autowired
+    CatalogoService catalogoService;
+
     @GetMapping(ApiRoutes.LISTAR_PROVEEDORS)
-    public ResponseEntity<ApiResponse<?>> getUsuarios() {
+    public ResponseEntity<ApiResponse<?>> getProveedores() {
         try {
             List<Proveedor> proveedors = proveedorService.findAll();
             List<ProveedorDto> proveedorDtos = proveedors.stream()
                     .map(proveedorMapper::toDto)
                     .collect(Collectors.toList());
+
+            
+
+            for (ProveedorDto proveedorDto : proveedorDtos) {
+
+                int tipoProv = proveedorDto.getTipoProveedor();
+                
+                if(tipoProv>0)
+                proveedorDto.setTipoProveedorDescripcion(catalogoService.findById(tipoProv).getDescripcion());
+
+                int tipoDocumento = proveedorDto.getTipoDocumento();
+
+                if(tipoDocumento>0)
+                proveedorDto.setTipoDocumentoDescripcion(catalogoService.findById(tipoDocumento).getDescripcion());
+                
+                int tipoServicio = proveedorDto.getTipoDeServicio();
+
+                if(tipoServicio>0)
+                proveedorDto.setTipoDeServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
+            }
 
          
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
@@ -60,11 +84,24 @@ public class ProveedorController {
 
 
     @GetMapping(ApiRoutes.BUSCAR_PROVEEDOR_POR_ID)
-    public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
+    public ResponseEntity<ApiResponse<?>> findProveedorById(@PathVariable int id) throws NotFoundException{
         
         Proveedor proveedor = proveedorService.findById(id);
 
         ProveedorDto proveedorDto = proveedorMapper.toDto(proveedor);
+        
+        int tipoProv = proveedorDto.getTipoProveedor();
+                
+        proveedorDto.setTipoProveedorDescripcion(catalogoService.findById(tipoProv).getDescripcion());
+
+        int tipoDocumento = proveedorDto.getTipoDocumento();
+
+        proveedorDto.setTipoDocumentoDescripcion(catalogoService.findById(tipoDocumento).getDescripcion());
+        
+        int tipoServicio = proveedorDto.getTipoDeServicio();
+
+        proveedorDto.setTipoDeServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
+
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", proveedorDto, Collections.emptyList()));
         
@@ -100,7 +137,7 @@ public class ProveedorController {
     }
 
     @DeleteMapping(ApiRoutes.ELIMINAR_PROVEEDOR)
-    public ResponseEntity<ApiResponse<?>> deleteUsuario(@PathVariable int id)  throws NotFoundException{
+    public ResponseEntity<ApiResponse<?>> deleteProveedor(@PathVariable int id)  throws NotFoundException{
         
             Proveedor proveedor = proveedorService.findById(id);
                     

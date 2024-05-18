@@ -14,6 +14,8 @@ public class DatosFinancierosDto {
 
     int tipoContrato;
 
+    String tipoContratoDescripcion;
+
     int nroContrato;
 
     String archivoContrato;
@@ -27,6 +29,8 @@ public class DatosFinancierosDto {
     int estado;
 
     int tipoServicio;
+    
+    String tipoServicioDescripcion;
 
     double montoContrato;
 

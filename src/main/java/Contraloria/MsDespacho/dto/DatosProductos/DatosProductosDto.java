@@ -15,10 +15,16 @@ public class DatosProductosDto {
 
     int tipoServicio;
 
+    String tipoServicioDescripcion;
+
     int tipoAcceso;
+
+    String tipoAccesoDescripcion;
 
     int tipoEntrega;
 
+    String tipoEntregaDescripcion;
+    
     int estadoEntrega;
 
     int plazoEntrega;

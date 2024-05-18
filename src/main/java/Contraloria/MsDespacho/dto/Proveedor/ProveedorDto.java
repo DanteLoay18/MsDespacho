@@ -8,8 +8,14 @@ public class ProveedorDto {
     
     int tipoProveedor;
 
-    int tipoDocumento;
+    //TODO : POR CADA tipoProveedor que es considerado en catalogo se le agrega un descripcion
 
+    String tipoProveedorDescripcion;
+    
+    int tipoDocumento;
+    
+    String tipoDocumentoDescripcion;
+    
     String numeroDocumento;
 
     String apellidoPaterno;
@@ -39,4 +45,6 @@ public class ProveedorDto {
     String paginaWeb;
 
     int tipoDeServicio;
+
+    String tipoDeServicioDescripcion;
 }
