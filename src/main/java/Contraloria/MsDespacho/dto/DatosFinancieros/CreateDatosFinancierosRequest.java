@@ -17,7 +17,6 @@ public class CreateDatosFinancierosRequest {
     @JsonIgnore
     private Proveedor proveedor;
 
-    @Min(value = 1, message = "El tipo proveedor debe ser un entero positivo")
     int idProveedor;
 
     int tipoContrato;

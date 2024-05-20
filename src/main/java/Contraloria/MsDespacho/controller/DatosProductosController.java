@@ -21,7 +21,6 @@ import Contraloria.MsDespacho.dto.ApiResponse;
 import Contraloria.MsDespacho.dto.DatosProductos.CreateDatosProductosRequest;
 import Contraloria.MsDespacho.dto.DatosProductos.DatosProductosDto;
 import Contraloria.MsDespacho.dto.DatosProductos.UpdateDatosProductosRequest;
-import Contraloria.MsDespacho.dto.Proveedor.ProveedorDto;
 import Contraloria.MsDespacho.exception.NotFoundException;
 import Contraloria.MsDespacho.mapper.DatosProductosMapper;
 import Contraloria.MsDespacho.model.DatosProductos;
