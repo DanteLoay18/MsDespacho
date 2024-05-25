@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class UpdateDatosFinancierosRequest 
 {
-    int id;
+    Integer id;
 
     Optional<Integer> tipoContrato;
 

@@ -111,12 +111,6 @@ public class CatalogoController {
         
         Catalogo enumerado = enumeradoService.findById(request.getId());
 
-        if(enumerado.getPadre() != request.getPadre()){
-            Catalogo enumeradoPadre = enumeradoService.findById(request.getIdPadre());
-
-            request.setPadre(enumeradoPadre);
-        }
-
         enumeradoMapper.updateRequestToEntity(enumerado,request);
 
         enumeradoService.update(enumerado);

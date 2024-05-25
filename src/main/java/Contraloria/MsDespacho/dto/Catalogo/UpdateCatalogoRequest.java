@@ -1,26 +1,20 @@
 package Contraloria.MsDespacho.dto.Catalogo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Optional;
 
-import Contraloria.MsDespacho.model.Catalogo;
 import lombok.Data;
 
 @Data
 public class UpdateCatalogoRequest {
-    private int id;
+    Integer id;
 
-    private int idPadre;
+    Optional<Integer> codigo;
 
-    private int codigo;
+    Optional<String> descripcion;
 
-    private String descripcion;
+    Optional<String> valor;
 
-    private String valor;
-
-    private int orden;
-
-    @JsonIgnore
-    private Catalogo padre;
+    Optional<Integer> orden;
 
     Integer usuarioModificacion;
 

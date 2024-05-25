@@ -15,9 +15,9 @@ public class CreateCatalogoRequest {
 
     private static final String REGEX_SOLO_LETRAS = "^[a-zA-Z ]+$";
 
-    private int idPadre;
+    private Integer idPadre;
 
-    private int codigo;
+    private Integer codigo;
 
     @Schema(description = "Nombre catalogo", example = "Tipo Documento")
     @NotBlank(message = "Por favor agregue la descripcion")
@@ -27,7 +27,7 @@ public class CreateCatalogoRequest {
     @Pattern(regexp = "\\d+", message = "El valor debe contener solo números")
     private String valor;
 
-    private int orden;
+    private Integer orden;
 
     @JsonIgnore
     private Catalogo padre;

@@ -37,7 +37,7 @@ public class Catalogo {
     private Catalogo padre;
 
     @Column(name = "NCAT_CODIGO", nullable = true)
-    private int codigo;
+    private Integer codigo;
 
     @Column(name = "CCAT_DESCRIPCION", nullable = true)
     private String descripcion;
@@ -46,7 +46,7 @@ public class Catalogo {
     private String valor;
 
     @Column(name = "NCAT_ORDEN", nullable = true)
-    private int orden;
+    private Integer orden;
 
     @Column(name = "NCAT_ESELIMINADO", nullable = false)
     private boolean esEliminado;

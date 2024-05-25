@@ -7,13 +7,11 @@ public class CatalogoDto {
 
     private Integer id;
 
-    private int codigo;
-
-    private String nombre;
+    private Integer codigo;
 
     private String descripcion;
 
     private String valor;
     
-    private int orden;
+    private Integer orden;
 }
