@@ -77,39 +77,44 @@ public class DatosProductosController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", datosProductosDtos, Collections.emptyList()));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
 
     @GetMapping(ApiRoutes.BUSCAR_DATOSPRODUCTOS_POR_ID)
     public ResponseEntity<ApiResponse<?>> findDatosProductos(@PathVariable int id) throws NotFoundException{
+        try {
+            DatosProductos datosProductos = datosProductosService.findById(id);
         
-        DatosProductos datosProductos = datosProductosService.findById(id);
+            DatosProductosDto datosProductosDto = datosProductosMapper.toDto(datosProductos);
         
-        DatosProductosDto datosProductosDto = datosProductosMapper.toDto(datosProductos);
+            int tipoServicio = datosProductosDto.getTipoServicio();
+
+            datosProductosDto.setTipoServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
+
+            int tipoAcceso = datosProductosDto.getTipoAcceso();
+
+            datosProductosDto.setTipoAccesoDescripcion(catalogoService.findById(tipoAcceso).getDescripcion());
+
+            int tipoEntrega = datosProductosDto.getTipoEntrega();
+
+            datosProductosDto.setTipoEntregaDescripcion(catalogoService.findById(tipoEntrega).getDescripcion());
         
-        int tipoServicio = datosProductosDto.getTipoServicio();
-
-        datosProductosDto.setTipoServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
-
-        int tipoAcceso = datosProductosDto.getTipoAcceso();
-
-        datosProductosDto.setTipoAccesoDescripcion(catalogoService.findById(tipoAcceso).getDescripcion());
-
-        int tipoEntrega = datosProductosDto.getTipoEntrega();
-
-        datosProductosDto.setTipoEntregaDescripcion(catalogoService.findById(tipoEntrega).getDescripcion());
-        
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", datosProductosDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @PostMapping(ApiRoutes.CREAR_DATOSPRODUCTOS)
     public ResponseEntity<ApiResponse<?>> create(@Valid @RequestBody CreateDatosProductosRequest request) throws NotFoundException {
+        try {
             Proveedor proveedorEncontrado = proveedorService.findById(request.getIdProveedor());
 
             request.setProveedor(proveedorEncontrado);
@@ -119,26 +124,34 @@ public class DatosProductosController {
             datosProductosService.add(datosProductos);
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO, null,Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @PutMapping(ApiRoutes.ACTUALIZAR_DATOSPRODUCTOS)
     public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateDatosProductosRequest request)  throws NotFoundException{
+        try {
+            DatosProductos datosProductos = datosProductosService.findById(request.getId());
         
-        DatosProductos datosProductos = datosProductosService.findById(request.getId());
-        
-        datosProductosMapper.updateRequestToEntity(datosProductos, request);
+            datosProductosMapper.updateRequestToEntity(datosProductos, request);
 
-        datosProductosService.update(datosProductos);
+            datosProductosService.update(datosProductos);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                     MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @DeleteMapping(ApiRoutes.ELIMINAR_DATOSPRODUCTOS)
     public ResponseEntity<ApiResponse<?>> deleteDatosProductos(@PathVariable int id)  throws NotFoundException{
-        
+        try {
             DatosProductos datosProductos = datosProductosService.findById(id);
                     
             datosProductosService.delete(datosProductos,1);
@@ -146,6 +159,10 @@ public class DatosProductosController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));
 
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 }

@@ -74,35 +74,40 @@ public class DatosFinancierosController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", datosFinancierosDtos, Collections.emptyList()));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
 
     @GetMapping(ApiRoutes.BUSCAR_DATOSFINANCIEROS_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
-        
-        DatosFinancieros datosFinancieros = datosFinancierosService.findById(id);
+        try {
+            DatosFinancieros datosFinancieros = datosFinancierosService.findById(id);
 
-        DatosFinancierosDto datosFinancierosDto = datosFinancierosMapper.toDto(datosFinancieros);
+            DatosFinancierosDto datosFinancierosDto = datosFinancierosMapper.toDto(datosFinancieros);
 
-        int tipoContrato = datosFinancierosDto.getTipoContrato();
+            int tipoContrato = datosFinancierosDto.getTipoContrato();
 
-        datosFinancierosDto.setTipoContratoDescripcion(catalogoService.findById(tipoContrato).getDescripcion());
+            datosFinancierosDto.setTipoContratoDescripcion(catalogoService.findById(tipoContrato).getDescripcion());
 
-        int tipoServicio = datosFinancierosDto.getTipoServicio();
+            int tipoServicio = datosFinancierosDto.getTipoServicio();
 
-        datosFinancierosDto.setTipoServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
+            datosFinancierosDto.setTipoServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", datosFinancierosDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @PostMapping(ApiRoutes.CREAR_DATOSFINANCIEROS)
     public ResponseEntity<ApiResponse<?>> create(@Valid @RequestBody CreateDatosFinancierosRequest request) throws NotFoundException {
+        try {
             Proveedor proveedorEncontrado = proveedorService.findById(request.getIdProveedor());
 
             request.setProveedor(proveedorEncontrado);
@@ -112,28 +117,36 @@ public class DatosFinancierosController {
             datosFinancierosService.add(datosFinancieros);
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO, null,Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @PutMapping(ApiRoutes.ACTUALIZAR_DATOSFINANCIEROS)
     public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateDatosFinancierosRequest request)  throws NotFoundException{
+        try {
+            Integer idDatosFinanciero = request.getId();
+
+            DatosFinancieros datosFinancieros = datosFinancierosService.findById(idDatosFinanciero);
         
-        Integer idDatosFinanciero = request.getId();
+            datosFinancierosMapper.updateRequestToEntity(datosFinancieros, request);
 
-        DatosFinancieros datosFinancieros = datosFinancierosService.findById(idDatosFinanciero);
-        
-        datosFinancierosMapper.updateRequestToEntity(datosFinancieros, request);
+            datosFinancierosService.update(datosFinancieros);
 
-        datosFinancierosService.update(datosFinancieros);
-
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                     MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @DeleteMapping(ApiRoutes.ELIMINAR_DATOSFINANCIEROS)
     public ResponseEntity<ApiResponse<?>> deleteUsuario(@PathVariable int id)  throws NotFoundException{
-        
+        try {
             DatosFinancieros datosFinancieros = datosFinancierosService.findById(id);
                     
             datosFinancierosService.delete(datosFinancieros,1);
@@ -141,6 +154,10 @@ public class DatosFinancierosController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));
 
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 }

@@ -31,27 +31,27 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(ApiRoutes.ENDPOINT_ENUMERADO)
+@RequestMapping(ApiRoutes.ENDPOINT_CATALAGOS)
 @Tag(name = "Catalogo")
 public class CatalogoController {
 
     @Autowired
-    CatalogoService enumeradoService;
+    CatalogoService catalagoService;
 
     @Autowired
-    CatalogoMapper enumeradoMapper;
+    CatalogoMapper catalagoMapper;
 
-    @GetMapping(ApiRoutes.LISTAR_ENUMERADOS)
+    @GetMapping(ApiRoutes.LISTAR_CATALAGOS)
     public ResponseEntity<ApiResponse<?>> getCatalogos() {
         try {
-            List<Catalogo> enumerados = enumeradoService.findAll();
-            List<CatalogoDto> enumeradosDto = enumerados.stream()
-                    .map(enumeradoMapper::toDto)
+            List<Catalogo> catalogos = catalagoService.findAll();
+            List<CatalogoDto> catalogosDto = catalogos.stream()
+                    .map(catalagoMapper::toDto)
                     .collect(Collectors.toList());
 
          
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                    "", enumeradosDto, Collections.emptyList()));
+                    "", catalogosDto, Collections.emptyList()));
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
@@ -59,15 +59,15 @@ public class CatalogoController {
         }
     }
 
-    @GetMapping(ApiRoutes.BUSCAR_ENUMERADO_POR_ID)
+    @GetMapping(ApiRoutes.BUSCAR_CATALAGOS_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
         try {
-            Catalogo enumerado = enumeradoService.findById(id);
+            Catalogo catalago = catalagoService.findById(id);
 
-            CatalogoDto enumeradoDto = enumeradoMapper.toDto(enumerado);
+            CatalogoDto catalagoDto = catalagoMapper.toDto(catalago);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                    "", enumeradoDto, Collections.emptyList()));
+                    "", catalagoDto, Collections.emptyList()));
             
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -77,17 +77,17 @@ public class CatalogoController {
         
     }
 
-    @GetMapping(ApiRoutes.LISTAR_ENUMERADOS_POR_PADRE)
+    @GetMapping(ApiRoutes.LISTAR_CATALAGOS_POR_PADRE)
     public ResponseEntity<ApiResponse<?>> getCatalogosByPadre(@PathVariable int id) throws NotFoundException {
         try {
-            List<Catalogo> enumerados = enumeradoService.findCatalogosHijos(id);
+            List<Catalogo> catalogos = catalagoService.findCatalogosHijos(id);
 
-            List<CatalogoDto> enumeradosDto = enumerados.stream()
-                                .map(enumeradoMapper::toDto)
+            List<CatalogoDto> catalogosDto = catalogos.stream()
+                                .map(catalagoMapper::toDto)
                                 .collect(Collectors.toList());
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                    "", enumeradosDto, Collections.emptyList()));
+                    "", catalogosDto, Collections.emptyList()));
                     
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -98,48 +98,61 @@ public class CatalogoController {
     }
 
     @Operation(summary = "Crear un catalogo", description = "Este endpoint crea un nuevo catalogo")
-    @PostMapping(ApiRoutes.CREAR_ENUMERADO)
+    @PostMapping(ApiRoutes.CREAR_CATALAGOS)
     public ResponseEntity<ApiResponse<?>> createCatalogo(@Valid @RequestBody CreateCatalogoRequest request) throws NotFoundException {
-
+        try {
             if(request.getIdPadre() > 0){
-                Catalogo enumeradoPadre = enumeradoService.findById(request.getIdPadre());
+                Catalogo catalagoPadre = catalagoService.findById(request.getIdPadre());
 
-                request.setPadre(enumeradoPadre);
+                request.setPadre(catalagoPadre);
             }
             
-            Catalogo enumerado = enumeradoMapper.createRequestToEntity(request);
+            Catalogo catalago = catalagoMapper.createRequestToEntity(request);
 
-            enumeradoService.add(enumerado);
+            catalagoService.add(catalago);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO, null,Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
-    @PutMapping(ApiRoutes.ACTUALIZAR_ENUMERADO)
+    @PutMapping(ApiRoutes.ACTUALIZAR_CATALAGOS)
     public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateCatalogoRequest request) throws NotFoundException{
-        
-        Catalogo enumerado = enumeradoService.findById(request.getId());
+        try {
 
-        enumeradoMapper.updateRequestToEntity(enumerado,request);
+            Catalogo catalago = catalagoService.findById(request.getId());
 
-        enumeradoService.update(enumerado);
+            catalagoMapper.updateRequestToEntity(catalago,request);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            catalagoService.update(catalago);
+
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                     MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
-    @DeleteMapping(ApiRoutes.ELIMINAR_ENUMERADO)
+    @DeleteMapping(ApiRoutes.ELIMINAR_CATALAGOS)
     public ResponseEntity<ApiResponse<?>> delete(@PathVariable int id)  throws NotFoundException{
-        
-            Catalogo enumerado = enumeradoService.findById(id);
+        try {
+            Catalogo catalago = catalagoService.findById(id);
                     
-            enumeradoService.delete(enumerado,1);
+            catalagoService.delete(catalago,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));
-
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), null,Collections.emptyList()));
+        }
         
     }
 

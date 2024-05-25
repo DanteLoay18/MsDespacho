@@ -8,13 +8,13 @@ public class ApiRoutes {
     public static final String BUSCAR_USUARIO_POR_ID = "/buscarPorId/{id}";
     public static final String LISTAR_USUARIOS = "/listar-usuarios";
 
-    public static final String ENDPOINT_ENUMERADO = "/api/v1/catalogo";
-    public static final String LISTAR_ENUMERADOS = "/listar-catalogos";
-    public static final String CREAR_ENUMERADO = "/crear";
-    public static final String BUSCAR_ENUMERADO_POR_ID = "/buscarPorId/{id}";
-    public static final String LISTAR_ENUMERADOS_POR_PADRE = "/listar-catalogos-padre/{id}";
-    public static final String ACTUALIZAR_ENUMERADO = "/actualizar";
-    public static final String ELIMINAR_ENUMERADO = "/eliminar/{id}";
+    public static final String ENDPOINT_CATALAGOS = "/api/v1/catalogo";
+    public static final String LISTAR_CATALAGOS = "/listar-catalogos";
+    public static final String CREAR_CATALAGOS = "/crear";
+    public static final String BUSCAR_CATALAGOS_POR_ID = "/buscarPorId/{id}";
+    public static final String LISTAR_CATALAGOS_POR_PADRE = "/listar-catalogos-padre/{id}";
+    public static final String ACTUALIZAR_CATALAGOS = "/actualizar";
+    public static final String ELIMINAR_CATALAGOS = "/eliminar/{id}";
     
     public static final String ENDPOINT_DOCUMENTO = "/api/v1/documento";
     public static final String LISTAR_DOCUMENTOS = "/listar-documentos";

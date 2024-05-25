@@ -1,28 +1,30 @@
 package Contraloria.MsDespacho.dto.DatosProductos;
+import java.util.Optional;
+
 import lombok.Data;
 
 @Data
 public class UpdateDatosProductosRequest {
     
-    int id;
+    Integer id;
 
-    String codigo;
+    Optional<String> codigo;
 
-    int tipoServicio;
+    Optional<Integer> tipoServicio;
 
-    int tipoAcceso;
+    Optional<Integer> tipoAcceso;
 
-    int tipoEntrega;
+    Optional<Integer> tipoEntrega;
 
-    int estadoEntrega;
+    Optional<Integer> estadoEntrega;
 
-    int plazoEntrega;
+    Optional<Integer> plazoEntrega;
 
-    int plazoRetorno;
+    Optional<Integer> plazoRetorno;
 
-    int pais;
+    Optional<Integer> pais;
 
-    String ubigeo;
+    Optional<String> ubigeo;
 
     Integer usuarioModificacion;
 

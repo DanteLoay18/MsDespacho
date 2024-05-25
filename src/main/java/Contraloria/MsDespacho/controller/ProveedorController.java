@@ -91,9 +91,9 @@ public class ProveedorController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", proveedorDtos, Collections.emptyList()));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
@@ -110,41 +110,49 @@ public class ProveedorController {
                                                         @RequestParam(defaultValue = "10") int rows )
                                                             {
         
-        
-        PageRequest pageRequest = PageRequest.of(page, rows);
+        try {
+            PageRequest pageRequest = PageRequest.of(page, rows);
 
-        Page<Proveedor> proveedors = proveedorService.findAllConParametrosPaginated(tipoDocumento, numeroDocumento, nombres, estado, anyo, fieldName, ascending, pageRequest);
+            Page<Proveedor> proveedors = proveedorService.findAllConParametrosPaginated(tipoDocumento, numeroDocumento, nombres, estado, anyo, fieldName, ascending, pageRequest);
 
-        PaginatorResponse<ProveedorDto> proveedorsDto = proveedorMapper.toPaginationDto(proveedors);
+            PaginatorResponse<ProveedorDto> proveedorsDto = proveedorMapper.toPaginationDto(proveedors);
 
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", proveedorsDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @GetMapping(ApiRoutes.BUSCAR_PROVEEDOR_POR_ID)
     public ResponseEntity<ApiResponse<?>> findProveedorById(@PathVariable int id) throws NotFoundException{
-        
-        Proveedor proveedor = proveedorService.findById(id);
+        try {
+            Proveedor proveedor = proveedorService.findById(id);
 
-        ProveedorDto proveedorDto = proveedorMapper.toDto(proveedor);
+            ProveedorDto proveedorDto = proveedorMapper.toDto(proveedor);
         
-        int tipoProv = proveedorDto.getTipoProveedor();
+            int tipoProv = proveedorDto.getTipoProveedor();
                 
-        proveedorDto.setTipoProveedorDescripcion(catalogoService.findById(tipoProv).getDescripcion());
+            proveedorDto.setTipoProveedorDescripcion(catalogoService.findById(tipoProv).getDescripcion());
 
-        int tipoDocumento = proveedorDto.getTipoDocumento();
+            int tipoDocumento = proveedorDto.getTipoDocumento();
 
-        proveedorDto.setTipoDocumentoDescripcion(catalogoService.findById(tipoDocumento).getDescripcion());
+            proveedorDto.setTipoDocumentoDescripcion(catalogoService.findById(tipoDocumento).getDescripcion());
         
-        int tipoServicio = proveedorDto.getTipoDeServicio();
+            int tipoServicio = proveedorDto.getTipoDeServicio();
 
-        proveedorDto.setTipoDeServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
+            proveedorDto.setTipoDeServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", proveedorDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
     
     @PostMapping(ApiRoutes.CREAR_PROVEEDOR)
@@ -156,29 +164,33 @@ public class ProveedorController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO, null,Collections.emptyList()));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
     @PutMapping(ApiRoutes.ACTUALIZAR_PROVEEDOR)
     public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateProveedorRequest request)  throws NotFoundException{
+        try {
+            Proveedor proveedor = proveedorService.findById(request.getId());
         
-        Proveedor proveedor = proveedorService.findById(request.getId());
-        
-        proveedorMapper.updateRequestToEntity(proveedor, request);
+            proveedorMapper.updateRequestToEntity(proveedor, request);
 
-        proveedorService.update(proveedor);
+            proveedorService.update(proveedor);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                     MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @DeleteMapping(ApiRoutes.ELIMINAR_PROVEEDOR)
     public ResponseEntity<ApiResponse<?>> deleteProveedor(@PathVariable int id)  throws NotFoundException{
-        
+        try {
             Proveedor proveedor = proveedorService.findById(id);
                     
             proveedorService.delete(proveedor,1);
@@ -186,6 +198,10 @@ public class ProveedorController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));
 
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 }

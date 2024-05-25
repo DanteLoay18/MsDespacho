@@ -86,10 +86,9 @@ public class DistribucionController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO,null ,Collections.emptyList()));
         }catch(ConstraintViolationException ex){
-            System.out.println(ex.getConstraintName());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                    MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
             
         
@@ -112,9 +111,9 @@ public class DistribucionController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", cargoDistribucionDtos, Collections.emptyList()));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
@@ -136,9 +135,9 @@ public class DistribucionController {
                     "", cargosDto, Collections.emptyList()));
 
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), null,Collections.emptyList()));
         }
     }
 

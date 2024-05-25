@@ -64,11 +64,9 @@ public class CargoDevolucionController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", devolucionDtos, Collections.emptyList()));
         } catch (Exception ex) {
-            System.out.println(ex);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
@@ -76,34 +74,42 @@ public class CargoDevolucionController {
     public ResponseEntity<ApiResponse<?>> findAllPaginated(@RequestParam(defaultValue = "0") int page, 
                                                            @RequestParam(defaultValue = "10") int rows ){
         
-        
-        PageRequest pageRequest = PageRequest.of(page, rows);
+        try {
+            PageRequest pageRequest = PageRequest.of(page, rows);
 
-        Page<CargoDevolucion> cargoDevoluciones = cargoDevolucionService.findAll( pageRequest);
+            Page<CargoDevolucion> cargoDevoluciones = cargoDevolucionService.findAll( pageRequest);
 
-        PaginatorResponse<CargoDevolucionDto> cargosDevolucionesDto = cargoDevolucionMapper.toPaginationDto(cargoDevoluciones);
+            PaginatorResponse<CargoDevolucionDto> cargosDevolucionesDto = cargoDevolucionMapper.toPaginationDto(cargoDevoluciones);
 
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", cargosDevolucionesDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @GetMapping(ApiRoutes.BUSCAR_CARGOSDEVOLUCION_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
-        
-        CargoDevolucion cargoDevolucion = cargoDevolucionService.findById(id);
+        try {
+            CargoDevolucion cargoDevolucion = cargoDevolucionService.findById(id);
 
-        CargoDevolucionDto cargoDevolucionDto = cargoDevolucionMapper.toDto(cargoDevolucion);
+            CargoDevolucionDto cargoDevolucionDto = cargoDevolucionMapper.toDto(cargoDevolucion);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", cargoDevolucionDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @PostMapping(ApiRoutes.CREAR_CARGODISTRIBUCION)
     public ResponseEntity<ApiResponse<?>> crearCargoDistribucion(@RequestBody CreateCargoDevolucion request) throws NotFoundException {
-            
+        try {    
             CargoDistribucion cargoDistribucion = cargoDistribucionService.findById(request.getIdCargoDistribucion());
 
             request.setCargoDistribucion(cargoDistribucion);
@@ -114,34 +120,42 @@ public class CargoDevolucionController {
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO, null,Collections.emptyList()));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }   
 
     @PutMapping(ApiRoutes.ACTUALIZAR_CARGODISTRIBUCION)
     public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateCargoDevolucion request)  throws NotFoundException{
-        
-        CargoDevolucion cargoDevolucion = cargoDevolucionService.findById(request.getId());
+        try {
+            CargoDevolucion cargoDevolucion = cargoDevolucionService.findById(request.getId());
 
-        if(cargoDevolucion.getCargoDistribucion().getId() != request.getIdCargoDistribucion()){
+            if(cargoDevolucion.getCargoDistribucion().getId() != request.getIdCargoDistribucion()){
 
             CargoDistribucion cargoDistribucion = cargoDistribucionService.findById(request.getIdCargoDistribucion());
 
             request.setCargoDistribucion(cargoDistribucion);
-        }
+            }
 
-        cargoDevolucionMapper.updateRequestToEntity(cargoDevolucion,request);
+            cargoDevolucionMapper.updateRequestToEntity(cargoDevolucion,request);
 
-        cargoDevolucionService.update(cargoDevolucion);
+            cargoDevolucionService.update(cargoDevolucion);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                     MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
 
     @DeleteMapping(ApiRoutes.ELIMINAR_CARGODISTRIBUCION)
     public ResponseEntity<ApiResponse<?>> delete(@PathVariable int id)  throws NotFoundException{
-        
+        try {
             CargoDevolucion cargoDevolucion = cargoDevolucionService.findById(id);
                     
             cargoDevolucionService.delete(cargoDevolucion,1);
@@ -149,8 +163,10 @@ public class CargoDevolucionController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));
 
-        
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
-
-    
 }

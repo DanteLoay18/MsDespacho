@@ -1,5 +1,7 @@
 package Contraloria.MsDespacho.mapper;
 
+import java.util.Optional;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -49,7 +51,28 @@ public interface ProveedorMapper {
         @Mapping(target = "fechaModificacion", expression = "java(new java.util.Date())"),
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
+        @Mapping(target = "tipoProveedor", expression = "java(unwrap(UpdateProveedorRequest.getTipoProveedor(), entity.getTipoProveedor()))"),
+        @Mapping(target = "tipoDocumento", expression = "java(unwrap(UpdateProveedorRequest.getTipoDocumento(), entity.getTipoDocumento()))"),
+        @Mapping(target = "numeroDocumento", expression = "java(unwrap(UpdateProveedorRequest.getNumeroDocumento(), entity.getNumeroDocumento()))"),
+        @Mapping(target = "apellidoPaterno", expression = "java(unwrap(UpdateProveedorRequest.getApellidoPaterno(), entity.getApellidoPaterno()))"),
+        @Mapping(target = "apellidoMaterno", expression = "java(unwrap(UpdateProveedorRequest.getApellidoMaterno(), entity.getApellidoMaterno()))"),
+        @Mapping(target = "nombres", expression = "java(unwrap(UpdateProveedorRequest.getNombres(), entity.getNombres()))"),
+        @Mapping(target = "telefono", expression = "java(unwrap(UpdateProveedorRequest.getTelefono(), entity.getTelefono()))"),
+        @Mapping(target = "celular", expression = "java(unwrap(UpdateProveedorRequest.getCelular(), entity.getCelular()))"),
+        @Mapping(target = "correo", expression = "java(unwrap(UpdateProveedorRequest.getCorreo(), entity.getCorreo()))"),
+        @Mapping(target = "estado", expression = "java(unwrap(UpdateProveedorRequest.getEstado(), entity.getEstado()))"),
+        @Mapping(target = "pais", expression = "java(unwrap(UpdateProveedorRequest.getPais(), entity.getPais()))"),
+        @Mapping(target = "ubigeo", expression = "java(unwrap(UpdateProveedorRequest.getUbigeo(), entity.getUbigeo()))"),
+        @Mapping(target = "direccionRENIEC", expression = "java(unwrap(UpdateProveedorRequest.getDireccionRENIEC(), entity.getDireccionRENIEC()))"),
+        @Mapping(target = "direccion", expression = "java(unwrap(UpdateProveedorRequest.getDireccion(), entity.getDireccion()))"),
+        @Mapping(target = "representanteLegal", expression = "java(unwrap(UpdateProveedorRequest.getRepresentanteLegal(), entity.getRepresentanteLegal()))"),
+        @Mapping(target = "paginaWeb", expression = "java(unwrap(UpdateProveedorRequest.getPaginaWeb(), entity.getPaginaWeb()))"),
+        @Mapping(target = "tipoDeServicio", expression = "java(unwrap(UpdateProveedorRequest.getTipoDeServicio(), entity.getTipoDeServicio()))")
     })
     void updateRequestToEntity(@MappingTarget Proveedor entity,UpdateProveedorRequest UpdateProveedorRequest);
 
+
+    default <T> T unwrap(Optional<T> optional, T currentValue) {
+        return (optional != null && optional.isPresent()) ? optional.get() : currentValue;
+    }
 }

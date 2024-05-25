@@ -1,47 +1,47 @@
 package Contraloria.MsDespacho.dto.Proveedor;
 
+import java.util.Optional;
+
 import lombok.Data;
 
 @Data
 public class UpdateProveedorRequest {
 
-    int id;
+    Integer id;
 
-    int tipoProveedor;
+    Optional<Integer> tipoProveedor;
     
-    int tipoDocumento;
+    Optional<Integer> tipoDocumento;
 
-    String numeroDocumento;
+    Optional<String> numeroDocumento;
     
+    Optional<String> apellidoPaterno;
     
-    String apellidoPaterno;
+    Optional<String> apellidoMaterno;
+
+    Optional<String> nombres;
+ 
+    Optional<String> telefono;
     
-    String apellidoMaterno;
+    Optional<String> celular;
 
-    String nombres;
+    Optional<String> correo;
 
+    Optional<Integer> estado;
+
+    Optional<Integer> pais;
     
-    String telefono;
+    Optional<String> ubigeo;
+
+    Optional<String> direccionRENIEC;
+
+    Optional<String> direccion;
     
-    String celular;
+    Optional<String> representanteLegal;
 
-    String correo;
+    Optional<String> paginaWeb;
 
-    int estado;
-
-    int pais;
-    
-    String ubigeo;
-
-    String direccionRENIEC;
-
-    String direccion;
-    
-    String representanteLegal;
-
-    String paginaWeb;
-
-    int tipoDeServicio;
+    Optional<Integer> tipoDeServicio;
 
     Integer usuarioModificacion;
 }

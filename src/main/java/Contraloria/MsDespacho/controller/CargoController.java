@@ -74,9 +74,9 @@ public class CargoController {
                     "", cargosDto, Collections.emptyList()));
         } catch (Exception ex) {
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            ex.getMessage(), null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
@@ -93,72 +93,97 @@ public class CargoController {
                                                             @RequestParam(defaultValue = "10") int rows )
                                                             {
         
-        
-        PageRequest pageRequest = PageRequest.of(page, rows);
+        try {
+            PageRequest pageRequest = PageRequest.of(page, rows);
 
-        Page<Cargo> cargos = cargoService.findAllConParametrosPaginated(idSedeDestino, numeroDocumento,tipoDocumento,anyo,fechaInicio, fechaFin, pageRequest, fieldName, ascending);
+            Page<Cargo> cargos = cargoService.findAllConParametrosPaginated(idSedeDestino, numeroDocumento,tipoDocumento,anyo,fechaInicio, fechaFin, pageRequest, fieldName, ascending);
 
-        PaginatorResponse<CargoDto> cargosDto = cargoMapper.toPaginationDto(cargos);
+            PaginatorResponse<CargoDto> cargosDto = cargoMapper.toPaginationDto(cargos);
 
 
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", cargosDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @GetMapping(ApiRoutes.BUSCAR_CARGO_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
-        
-        Cargo cargo = cargoService.findById(id);
+        try {
+            Cargo cargo = cargoService.findById(id);
 
-        CargoDto cargoDto = cargoMapper.toDto(cargo);
+            CargoDto cargoDto = cargoMapper.toDto(cargo);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", cargoDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @GetMapping(ApiRoutes.BUSCAR_DOCUMENTO_POR_CODIGOBARRA)
     public ResponseEntity<ApiResponse<?>> buscarPorCodigoDeBarra(@RequestParam String codigoBarra) throws NotFoundException{
-        
-        Cargo cargo = cargoService.findByCodigoBarra(codigoBarra);
+        try {
+            Cargo cargo = cargoService.findByCodigoBarra(codigoBarra);
 
-        CargoDto cargoDto = cargoMapper.toDto(cargo);
+            CargoDto cargoDto = cargoMapper.toDto(cargo);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", cargoDto, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @GetMapping(ApiRoutes.LISTAR_RESUMEN_CARGOS_POR_UO)
     public ResponseEntity<ApiResponse<?>> listarResumenCargosPorUO(){
         
-        
-        List<Object> resumenCargos = cargoService.obtenerCantidadPorSedeDestino();
+        try {
+            List<Object> resumenCargos = cargoService.obtenerCantidadPorSedeDestino();
 
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", resumenCargos, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
     @GetMapping(ApiRoutes.LISTAR_CARGOS_POR_UO)
     public ResponseEntity<ApiResponse<?>> listarCargosPorUO(@PathVariable int idSedeDestino ){
         
-        
-        List<Cargo> cargos = cargoService.listarCargosPorUO(idSedeDestino);
+        try {
+            List<Cargo> cargos = cargoService.listarCargosPorUO(idSedeDestino);
 
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", cargos, Collections.emptyList()));
-        
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
 
 
     @PostMapping(ApiRoutes.CREAR_CARGO)
     public ResponseEntity<ApiResponse<?>> crearCargo(@Valid @RequestBody CreateCargoRequest request) throws NotFoundException {
-            
+        try {    
             Documento documento = documentoService.findById(request.getIdDocumento());
 
             request.setDocumento(documento);
@@ -169,41 +194,54 @@ public class CargoController {
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                         MensajesParametrizados.MENSAJE_CREAR_EXITOSO, null,Collections.emptyList()));
-        
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }   
 
     @PutMapping(ApiRoutes.ACTUALIZAR_CARGO)
     public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateCargoRequest request)  throws NotFoundException{
-        
-        Cargo cargo = cargoService.findById(request.getId());
+        try {
+            Cargo cargo = cargoService.findById(request.getId());
 
-        if(cargo.getDocumento().getId() != request.getIdDocumento()){
+            if(cargo.getDocumento().getId() != request.getIdDocumento()){
             Documento documento = documentoService.findById(request.getIdDocumento());
 
             request.setDocumento(documento);
-        }
+         }
 
-        cargoMapper.updateRequestToEntity(cargo,request);
+            cargoMapper.updateRequestToEntity(cargo,request);
 
-        cargoService.update(cargo);
+            cargoService.update(cargo);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                                                     MensajesParametrizados.MENSAJE_EDITADO_EXITOSO, null, Collections.emptyList() ));
-        
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }
     }
 
 
     @DeleteMapping(ApiRoutes.ELIMINAR_CARGO)
     public ResponseEntity<ApiResponse<?>> delete(@PathVariable int id)  throws NotFoundException{
-        
+        try {
             Cargo cargo = cargoService.findById(id);
                     
             cargoService.delete(cargo,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));
+        } catch (Exception ex) {
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                    ex.getMessage(), null,Collections.emptyList()));
+        }        
     }
-
-
-
 }
