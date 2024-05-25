@@ -27,11 +27,7 @@ import Contraloria.MsDespacho.model.Catalogo;
 import Contraloria.MsDespacho.routes.ApiRoutes;
 import Contraloria.MsDespacho.service.CatalogoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-// import io.swagger.v3.oas.annotations.responses;
 import jakarta.validation.Valid;
 
 @RestController
@@ -57,6 +53,7 @@ public class CatalogoController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", enumeradosDto, Collections.emptyList()));
         } catch (Exception ex) {
+            System.out.println(ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                             MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));

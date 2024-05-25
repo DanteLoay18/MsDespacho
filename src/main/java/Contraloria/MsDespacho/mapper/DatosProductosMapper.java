@@ -30,7 +30,7 @@ public interface DatosProductosMapper {
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
     DatosProductos createRequestToEntity(CreateDatosProductosRequest createDatosProductosRequest);
-
+    
     @Mappings({
         @Mapping(target = "id", ignore = true),
         @Mapping(target = "esEliminado", ignore = true),
@@ -39,6 +39,7 @@ public interface DatosProductosMapper {
         @Mapping(target = "fechaModificacion", expression = "java(new java.util.Date())"),
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
+        @Mapping(target = "proveedor", ignore = true),
     })
     void updateRequestToEntity(@MappingTarget DatosProductos entity,UpdateDatosProductosRequest UpdateDatosProductosRequest);
 

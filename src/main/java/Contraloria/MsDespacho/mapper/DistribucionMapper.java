@@ -63,6 +63,7 @@ public interface DistribucionMapper {
         @Mapping(target = "usuarioModificacion", ignore = true),
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
+        @Mapping(target = "cargoDistribucion", ignore = true),
     })
     CargoAdicional createRequestToCargoAdicionalEntity(String numeroDocumento,  CargoDistribucion cargoDistribucion);
 

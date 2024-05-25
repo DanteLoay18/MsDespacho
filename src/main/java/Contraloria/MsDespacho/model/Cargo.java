@@ -50,13 +50,13 @@ public class Cargo{
     @Column(name = "CCAT_TIPODEVOLUCION", nullable = true)
     int enuMotivoDevolucion;
 
-    @Column(name = "descMotivoDevolucion", nullable = true, length = 100)
+    @Column(name = "CCAR_MOTDEVOLUCION", nullable = true, length = 100)
     String descMotivoDevolucion;
 
     @Column(name = "CCAR_NOTAS", nullable = true, length = 500)
     String notas;
 
-    @Column(name = "codigoBarra", nullable = true, length = 50)
+    @Column(name = "CCAR_CODBARRA", nullable = true, length = 50)
     String codigoBarra;
 
     @Column(name = "NCAR_ESELIMINADO", nullable = false)

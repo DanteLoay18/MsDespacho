@@ -1,9 +1,4 @@
 package Contraloria.MsDespacho.dto.DatosProductos;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import Contraloria.MsDespacho.model.Proveedor;
-import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data
