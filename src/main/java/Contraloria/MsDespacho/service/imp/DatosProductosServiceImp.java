@@ -29,9 +29,9 @@ public class DatosProductosServiceImp implements DatosProductosService{
     }
 
     @Override
-    public boolean delete(DatosProductos datosProductos) {
+    public boolean delete(DatosProductos datosProductos,Integer usuarioEliminacion) {
         datosProductos.setFechaEliminacion(new Date());
-        datosProductos.setUsuarioEliminacion("UsuarioEliminacion");
+        datosProductos.setUsuarioEliminacion(usuarioEliminacion);
         
         datosProductosRepository.save(datosProductos);
 
@@ -49,7 +49,7 @@ public class DatosProductosServiceImp implements DatosProductosService{
         Optional<DatosProductos> model = datosProductosRepository.findById(id);
 
         if(model.isEmpty() || model.get().isEsEliminado()){
-            throw new NotFoundException("No se encontro el proveedor");
+            throw new NotFoundException("No se encontro el dato producto");
         }
        
         return model.get();

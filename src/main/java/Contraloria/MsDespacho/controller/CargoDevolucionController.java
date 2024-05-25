@@ -144,7 +144,7 @@ public class CargoDevolucionController {
         
             CargoDevolucion cargoDevolucion = cargoDevolucionService.findById(id);
                     
-            cargoDevolucionService.delete(cargoDevolucion);
+            cargoDevolucionService.delete(cargoDevolucion,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));

@@ -11,7 +11,7 @@ import Contraloria.MsDespacho.model.CargoAdicional;
 public interface CargoAdicionalService {
     public CargoAdicional add (CargoAdicional cargo);
     public CargoAdicional update (CargoAdicional cargo);
-    public boolean delete (CargoAdicional cargo);
+    public boolean delete (CargoAdicional cargo,Integer usuarioEliminacion);
     public List<CargoAdicional> findAll();
     public Page<CargoAdicional> findAll(PageRequest pageRequest);
     public CargoAdicional findById(int id) throws NotFoundException;

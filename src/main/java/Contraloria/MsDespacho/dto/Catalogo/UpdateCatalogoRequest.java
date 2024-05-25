@@ -3,7 +3,6 @@ package Contraloria.MsDespacho.dto.Catalogo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import Contraloria.MsDespacho.model.Catalogo;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -14,9 +13,6 @@ public class UpdateCatalogoRequest {
 
     private int codigo;
 
-    @NotBlank(message = "Por favor agregue el nombre")
-    private String nombre;
-
     private String descripcion;
 
     private String valor;
@@ -25,4 +21,7 @@ public class UpdateCatalogoRequest {
 
     @JsonIgnore
     private Catalogo padre;
+
+    Integer usuarioModificacion;
+
 }

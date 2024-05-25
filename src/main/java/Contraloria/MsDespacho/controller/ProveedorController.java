@@ -1,7 +1,6 @@
 package Contraloria.MsDespacho.controller;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,14 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Contraloria.MsDespacho.constants.MensajesParametrizados;
 import Contraloria.MsDespacho.dto.ApiResponse;
-import Contraloria.MsDespacho.dto.Cargo.CargoDto;
 import Contraloria.MsDespacho.dto.Paginator.PaginatorResponse;
 import Contraloria.MsDespacho.dto.Proveedor.CreateProveedorRequest;
 import Contraloria.MsDespacho.dto.Proveedor.ProveedorDto;
 import Contraloria.MsDespacho.dto.Proveedor.UpdateProveedorRequest;
 import Contraloria.MsDespacho.exception.NotFoundException;
 import Contraloria.MsDespacho.mapper.ProveedorMapper;
-import Contraloria.MsDespacho.model.Cargo;
 import Contraloria.MsDespacho.model.Proveedor;
 import Contraloria.MsDespacho.routes.ApiRoutes;
 import Contraloria.MsDespacho.service.CatalogoService;
@@ -149,7 +146,7 @@ public class ProveedorController {
                 "", proveedorDto, Collections.emptyList()));
         
     }
-
+    
     @PostMapping(ApiRoutes.CREAR_PROVEEDOR)
     public ResponseEntity<ApiResponse<?>> create(@Valid @RequestBody CreateProveedorRequest request) {
         try {
@@ -184,7 +181,7 @@ public class ProveedorController {
         
             Proveedor proveedor = proveedorService.findById(id);
                     
-            proveedorService.delete(proveedor);
+            proveedorService.delete(proveedor,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));

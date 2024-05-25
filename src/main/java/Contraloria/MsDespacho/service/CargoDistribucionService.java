@@ -12,7 +12,7 @@ import Contraloria.MsDespacho.model.CargoDistribucion;
 public interface CargoDistribucionService {
     public CargoDistribucion add (CargoDistribucion cargo);
     public CargoDistribucion update (CargoDistribucion cargo);
-    public boolean delete (CargoDistribucion cargo);
+    public boolean delete (CargoDistribucion cargo,Integer usuarioEliminacion);
     public List<CargoDistribucion> findAll();
     public Page<CargoDistribucion> findAll(PageRequest pageRequest);
     public CargoDistribucion findById(int id) throws NotFoundException;

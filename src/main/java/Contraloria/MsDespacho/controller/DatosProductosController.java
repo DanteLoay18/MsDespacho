@@ -141,7 +141,7 @@ public class DatosProductosController {
         
             DatosProductos datosProductos = datosProductosService.findById(id);
                     
-            datosProductosService.delete(datosProductos);
+            datosProductosService.delete(datosProductos,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));

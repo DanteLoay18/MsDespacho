@@ -33,10 +33,10 @@ public class ProveedorServiceImp implements ProveedorService{
     }
 
     @Override
-    public boolean delete(Proveedor proveedor){
+    public boolean delete(Proveedor proveedor,Integer usuarioEliminacion){
 
         proveedor.setFechaEliminacion(new Date());
-        proveedor.setUsuarioEliminacion("UsuarioEliminacion");
+        proveedor.setUsuarioEliminacion(usuarioEliminacion);
         
         proveedorRepository.save(proveedor);
 

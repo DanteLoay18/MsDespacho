@@ -13,7 +13,7 @@ import Contraloria.MsDespacho.model.Cargo;
 public interface CargoService {
     public Cargo add (Cargo cargo);
     public Cargo update (Cargo cargo);
-    public boolean delete (Cargo cargo);
+    public boolean delete (Cargo cargo,Integer usuarioEliminacion);
     public List<Cargo> findAll();
     public List<Cargo> findAllConParametros(Optional<Integer> idSedeDestino, Optional<String> numeroDocumento,Optional<Integer> tipoDocumento,Optional<Integer> anyo,Optional<Date> fechaInicio,Optional<Date> fechaFin,Optional<String> fieldName,Optional<Boolean> ascending);
     public Page<Cargo> findAll(PageRequest pageRequest);

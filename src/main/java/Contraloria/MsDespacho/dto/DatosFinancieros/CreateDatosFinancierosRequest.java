@@ -43,6 +43,8 @@ public class CreateDatosFinancierosRequest {
     @DecimalMin(value = "0.0", inclusive = false, message = "El saldoContrato debe ser un número positivo")
     double saldoContrato;
 
+    Integer usuarioCreacion;
+
     @AssertTrue(message = "La fecha de retorno debe ser posterior a la fecha de recepción.")
     public boolean isFechaRetornoValid() {
         return fechaFin != null && fechaInicio != null && !fechaFin.before(fechaInicio);

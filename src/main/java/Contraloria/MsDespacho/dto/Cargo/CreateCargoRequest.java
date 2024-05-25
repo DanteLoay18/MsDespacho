@@ -48,4 +48,7 @@ public class CreateCargoRequest {
     public boolean isFechaRetornoValid() {
         return fechaRetorno != null && fechaRecepcion != null && !fechaRetorno.before(fechaRecepcion);
     }
+
+    Integer usuarioCreacion;
+
 }

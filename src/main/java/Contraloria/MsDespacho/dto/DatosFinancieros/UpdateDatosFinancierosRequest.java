@@ -1,11 +1,8 @@
 package Contraloria.MsDespacho.dto.DatosFinancieros;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import Contraloria.MsDespacho.model.Proveedor;
-import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data
@@ -13,29 +10,25 @@ public class UpdateDatosFinancierosRequest
 {
     int id;
 
-    @JsonIgnore
-    private Proveedor proveedor;
+    Optional<Integer> tipoContrato;
 
-    @Min(value = 1, message = "El tipo proveedor debe ser un entero positivo")
-    int idProveedor;
+    Optional<Integer> nroContrato;
 
-    int tipoContrato;
+    Optional<String> archivoContrato;
 
-    int nroContrato;
+    Optional<Date> fechaInicio;
 
-    String archivoContrato;
+    Optional<Date> fechaFin;
 
-    Date fechaInicio;
-
-    Date fechaFin;
-
-    Date fechaConsulta;
+    Optional<Date> fechaConsulta;
     
-    int estado;
+    Optional<Integer> estado;
 
-    int tipoServicio;
+    Optional<Integer> tipoServicio;
 
-    double montoContrato;
+    Optional<Double> montoContrato;
 
-    double saldoContrato;
+    Optional<Double> saldoContrato;
+
+    Integer usuarioModificacion;
 }

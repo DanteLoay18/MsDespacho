@@ -29,10 +29,10 @@ public class Proveedor{
     private Integer id;
 
     @Column(name = "NCAT_TIPOPROVEEDOR", nullable = false)
-    int tipoProveedor;
+    Integer tipoProveedor;
 
     @Column(name = "NCAT_TIPODOCUMENTO", nullable = false)
-    int tipoDocumento;
+    Integer tipoDocumento;
 
     @Column(name = "CPROV_NUMDOCUMENTO",length=15, nullable = false)
     String numeroDocumento;
@@ -56,7 +56,7 @@ public class Proveedor{
     String correo;
 
     @Column(name = "NPROV_PAIS", nullable = true)
-    int pais;
+    Integer pais;
 
     @Column(name = "CPROV_UBIGEO",length=6, nullable = true)
     String ubigeo;
@@ -74,10 +74,10 @@ public class Proveedor{
     String paginaWeb;
 
     @Column(name = "NCAT_TIPOSERVICIO", nullable = true)
-    int tipoDeServicio;
+    Integer tipoDeServicio;
     
     @Column(name = "NCAT_ESTPROVEEDOR", nullable = true)
-    int estado;
+    Integer estado;
 
     @Column(name = "NPROV_ESELIMINADO", nullable = false)
     private boolean esEliminado;

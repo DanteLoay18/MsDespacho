@@ -13,11 +13,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class CreateProveedorRequest {
     
-    @NotBlank(message = "Por favor agregue el numero de documento")
-    private int tipoProveedor;
+    Integer tipoProveedor;
     
-    @NotBlank(message = "Por favor agregue el numero de documento")
-    private int tipoDocumento;
+    Integer tipoDocumento;
 
     @NotBlank(message = "Por favor agregue el numero de documento")
     @Length(min=1 ,max = 15, message = "El numero de documento debe tener maximo 15 caracteres")
@@ -61,4 +59,6 @@ public class CreateProveedorRequest {
     String paginaWeb;
 
     int tipoDeServicio;
+
+    Integer usuarioCreacion;
 }

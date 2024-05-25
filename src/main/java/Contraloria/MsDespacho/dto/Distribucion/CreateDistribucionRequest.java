@@ -13,5 +13,8 @@ public class CreateDistribucionRequest {
     ArrayList<String> cargosAdicionales;
 
     int idSedeDestino;
+
+    Integer usuarioCreacion;
+
 }
 

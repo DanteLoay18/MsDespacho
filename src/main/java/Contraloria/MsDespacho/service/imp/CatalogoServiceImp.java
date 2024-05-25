@@ -28,10 +28,10 @@ public class CatalogoServiceImp implements CatalogoService{
     }
 
     @Override
-    public boolean delete(Catalogo catalogo){
+    public boolean delete(Catalogo catalogo,Integer usuarioEliminacion){
 
         catalogo.setFechaEliminacion(new Date());
-        catalogo.setUsuarioEliminacion("UsuarioEliminacion");
+        catalogo.setUsuarioEliminacion(usuarioEliminacion);
         
         catalogoRepository.save(catalogo);
 

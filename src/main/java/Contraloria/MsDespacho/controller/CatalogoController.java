@@ -26,7 +26,12 @@ import Contraloria.MsDespacho.mapper.CatalogoMapper;
 import Contraloria.MsDespacho.model.Catalogo;
 import Contraloria.MsDespacho.routes.ApiRoutes;
 import Contraloria.MsDespacho.service.CatalogoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+// import io.swagger.v3.oas.annotations.responses;
 import jakarta.validation.Valid;
 
 @RestController
@@ -85,6 +90,7 @@ public class CatalogoController {
         
     }
 
+    @Operation(summary = "Crear un catalogo", description = "Este endpoint crea un nuevo catalogo")
     @PostMapping(ApiRoutes.CREAR_ENUMERADO)
     public ResponseEntity<ApiResponse<?>> createCatalogo(@Valid @RequestBody CreateCatalogoRequest request) throws NotFoundException {
 
@@ -128,7 +134,7 @@ public class CatalogoController {
         
             Catalogo enumerado = enumeradoService.findById(id);
                     
-            enumeradoService.delete(enumerado);
+            enumeradoService.delete(enumerado,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));

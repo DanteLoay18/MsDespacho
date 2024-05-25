@@ -11,12 +11,6 @@ public class UpdateDatosProductosRequest {
     
     int id;
 
-    @JsonIgnore
-    private Proveedor proveedor;
-
-    @Min(value = 1, message = "El tipo proveedor debe ser un entero positivo")
-    int idProveedor;
-
     String codigo;
 
     int tipoServicio;
@@ -34,4 +28,7 @@ public class UpdateDatosProductosRequest {
     int pais;
 
     String ubigeo;
+
+    Integer usuarioModificacion;
+
 }

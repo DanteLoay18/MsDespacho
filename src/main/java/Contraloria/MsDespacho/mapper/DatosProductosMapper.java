@@ -12,13 +12,18 @@ import Contraloria.MsDespacho.model.DatosProductos;
 
 @Mapper(componentModel = "spring")
 public interface DatosProductosMapper {
+
+    @Mappings({
+        @Mapping(target = "tipoServicioDescripcion", ignore = true),
+        @Mapping(target = "tipoAccesoDescripcion", ignore = true),
+        @Mapping(target = "tipoEntregaDescripcion", ignore = true),
+    })
     DatosProductosDto toDto(DatosProductos datosProductos);
 
     @Mappings({
         @Mapping(target = "id", ignore = true),
         @Mapping(target = "esEliminado", constant = "false"),
         @Mapping(target = "fechaCreacion", expression = "java(new java.util.Date())"),
-        @Mapping(target = "usuarioCreacion", expression = "java(obtenerUsuarioActual())"),
         @Mapping(target = "fechaModificacion", ignore = true),
         @Mapping(target = "usuarioModificacion", ignore = true),
         @Mapping(target = "usuarioEliminacion", ignore = true),
@@ -32,13 +37,10 @@ public interface DatosProductosMapper {
         @Mapping(target = "fechaCreacion", ignore = true),
         @Mapping(target = "usuarioCreacion", ignore = true),
         @Mapping(target = "fechaModificacion", expression = "java(new java.util.Date())"),
-        @Mapping(target = "usuarioModificacion", expression = "java(obtenerUsuarioActual())"),
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
     })
     void updateRequestToEntity(@MappingTarget DatosProductos entity,UpdateDatosProductosRequest UpdateDatosProductosRequest);
 
-    default String obtenerUsuarioActual() {
-        return "UsuarioActual";
-    }
+
 }

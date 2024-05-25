@@ -199,7 +199,7 @@ public class CargoController {
         
             Cargo cargo = cargoService.findById(id);
                     
-            cargoService.delete(cargo);
+            cargoService.delete(cargo,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));

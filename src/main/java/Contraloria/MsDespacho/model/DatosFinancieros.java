@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.*;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -37,10 +37,10 @@ public class DatosFinancieros{
     Proveedor proveedor;
 
     @Column(name = "NCAT_TIPOCONTRATO", nullable = true)
-    int tipoContrato;
+    Integer tipoContrato;
 
     @Column(name = "CFIN_NROCONTRATO", nullable = true)
-    int nroContrato;
+    Integer nroContrato;
 
     @Column(name = "CFIN_ARCHCONTRANTO",length=100, nullable = true)
     String archivoContrato;
@@ -55,16 +55,16 @@ public class DatosFinancieros{
     Date fechaConsulta;
 
     @Column(name = "CCAT_TIPOSERVICIO", nullable = true)
-    int tipoServicio;
+    Integer tipoServicio;
 
     @Column(name = "CFIN_MONCONTRATO")
-    double montoContrato;
+    Double montoContrato;
 
     @Column(name = "NFIN_SALCONTRATO")
-    double saldoContrato;
+    Double saldoContrato;
     
     @Column(name = "NCAT_ESTFINANCIERO", nullable = true)
-    int estado;
+    Integer estado;
 
     @Column(name = "NFIN_ESELIMINADO", nullable = false)
     private boolean esEliminado;

@@ -39,9 +39,6 @@ public class Catalogo {
     @Column(name = "NCAT_CODIGO", nullable = true)
     private int codigo;
 
-    @Column(name = "CCAT_NOMBRES", nullable = false)
-    private String nombre;
-
     @Column(name = "CCAT_DESCRIPCION", nullable = true)
     private String descripcion;
 

@@ -38,4 +38,7 @@ public class UpdateCargoRequest {
 
     @JsonIgnore
     private String usuarioCreacion;
+
+    Integer usuarioModificacion;
+
 }

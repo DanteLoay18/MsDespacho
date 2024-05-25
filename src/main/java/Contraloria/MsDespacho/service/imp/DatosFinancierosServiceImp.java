@@ -30,9 +30,9 @@ public class DatosFinancierosServiceImp implements DatosFinancierosService{
     }
 
     @Override
-    public boolean delete(DatosFinancieros datosFinancieros) {
+    public boolean delete(DatosFinancieros datosFinancieros,Integer usuarioEliminacion) {
         datosFinancieros.setFechaEliminacion(new Date());
-        datosFinancieros.setUsuarioEliminacion("UsuarioEliminacion");
+        datosFinancieros.setUsuarioEliminacion(usuarioEliminacion);
         
         datosFinancierosRepository.save(datosFinancieros);
 
@@ -50,7 +50,7 @@ public class DatosFinancierosServiceImp implements DatosFinancierosService{
         Optional<DatosFinancieros> model = datosFinancierosRepository.findById(id);
 
         if(model.isEmpty() || model.get().isEsEliminado()){
-            throw new NotFoundException("No se encontro el proveedor");
+            throw new NotFoundException("No se encontro el dato financiero");
         }
        
         return model.get();

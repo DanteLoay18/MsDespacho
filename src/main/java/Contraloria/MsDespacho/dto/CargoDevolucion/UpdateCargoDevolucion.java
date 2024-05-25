@@ -22,4 +22,7 @@ public class UpdateCargoDevolucion {
 
     @JsonIgnore
     private CargoDistribucion cargoDistribucion;
+
+    Integer usuarioModificacion;
+
 }

@@ -118,7 +118,9 @@ public class DatosFinancierosController {
     @PutMapping(ApiRoutes.ACTUALIZAR_DATOSFINANCIEROS)
     public ResponseEntity<ApiResponse<?>> update(@Valid @RequestBody UpdateDatosFinancierosRequest request)  throws NotFoundException{
         
-        DatosFinancieros datosFinancieros = datosFinancierosService.findById(request.getId());
+        Integer idDatosFinanciero = request.getId();
+
+        DatosFinancieros datosFinancieros = datosFinancierosService.findById(idDatosFinanciero);
         
         datosFinancierosMapper.updateRequestToEntity(datosFinancieros, request);
 
@@ -134,7 +136,7 @@ public class DatosFinancierosController {
         
             DatosFinancieros datosFinancieros = datosFinancierosService.findById(id);
                     
-            datosFinancierosService.delete(datosFinancieros);
+            datosFinancierosService.delete(datosFinancieros,1);
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));

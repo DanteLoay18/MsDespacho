@@ -37,10 +37,10 @@ public class CargoDistribucionServiceImp implements CargoDistribucionService{
     }
 
     @Override
-    public boolean delete(CargoDistribucion cargoDistribucion){
+    public boolean delete(CargoDistribucion cargoDistribucion,Integer usuarioEliminacion){
 
         cargoDistribucion.setFechaEliminacion(new Date());
-        cargoDistribucion.setUsuarioEliminacion("UsuarioEliminacion");
+        cargoDistribucion.setUsuarioEliminacion(usuarioEliminacion);
         
         cargoDistribucionRepository.save(cargoDistribucion);
 

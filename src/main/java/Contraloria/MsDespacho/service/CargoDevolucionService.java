@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 public interface CargoDevolucionService {
     public CargoDevolucion add (CargoDevolucion cargo);
     public CargoDevolucion update (CargoDevolucion cargo);
-    public boolean delete (CargoDevolucion cargo);
+    public boolean delete (CargoDevolucion cargo,Integer usuarioEliminacion);
     public List<CargoDevolucion> findAll();
     public Page<CargoDevolucion> findAll(PageRequest pageRequest);
     public CargoDevolucion findById(int id) throws NotFoundException;

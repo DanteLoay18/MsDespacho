@@ -20,4 +20,7 @@ public class CreateCargoDevolucion {
 
     @JsonIgnore
     private CargoDistribucion cargoDistribucion;
+
+    Integer usuarioCreacion;
+
 }
