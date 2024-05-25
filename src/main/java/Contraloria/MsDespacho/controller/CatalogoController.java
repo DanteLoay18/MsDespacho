@@ -53,28 +53,33 @@ public class CatalogoController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", enumeradosDto, Collections.emptyList()));
         } catch (Exception ex) {
-            System.out.println(ex);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), null,Collections.emptyList()));
         }
     }
 
     @GetMapping(ApiRoutes.BUSCAR_ENUMERADO_POR_ID)
     public ResponseEntity<ApiResponse<?>> findSolicitudById(@PathVariable int id) throws NotFoundException{
-        
-        Catalogo enumerado = enumeradoService.findById(id);
+        try {
+            Catalogo enumerado = enumeradoService.findById(id);
 
-        CatalogoDto enumeradoDto = enumeradoMapper.toDto(enumerado);
+            CatalogoDto enumeradoDto = enumeradoMapper.toDto(enumerado);
 
-        return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
-                "", enumeradoDto, Collections.emptyList()));
+            return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
+                    "", enumeradoDto, Collections.emptyList()));
+            
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), null,Collections.emptyList()));
+        }
         
     }
 
     @GetMapping(ApiRoutes.LISTAR_ENUMERADOS_POR_PADRE)
     public ResponseEntity<ApiResponse<?>> getCatalogosByPadre(@PathVariable int id) throws NotFoundException {
-        
+        try {
             List<Catalogo> enumerados = enumeradoService.findCatalogosHijos(id);
 
             List<CatalogoDto> enumeradosDto = enumerados.stream()
@@ -83,7 +88,12 @@ public class CatalogoController {
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", enumeradosDto, Collections.emptyList()));
-       
+                    
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse<>(HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), null,Collections.emptyList()));
+        }
         
     }
 

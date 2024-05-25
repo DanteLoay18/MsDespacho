@@ -73,11 +73,10 @@ public class CargoController {
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", cargosDto, Collections.emptyList()));
         } catch (Exception ex) {
-            System.out.println(ex);
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse<>(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                            MensajesParametrizados.MENSAJE_ERROR_INTERNO_SERVIDOR, null,Collections.emptyList()));
+                            ex.getMessage(), null,Collections.emptyList()));
         }
     }
 

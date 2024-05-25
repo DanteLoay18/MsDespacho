@@ -23,7 +23,8 @@ public class CreateCatalogoRequest {
     @NotBlank(message = "Por favor agregue la descripcion")
     @Pattern(regexp = REGEX_SOLO_LETRAS, message = "La descripcion debe contener solo letras")
     private String descripcion;
-
+    
+    @Schema(description = "Valor", example = "0")
     @Pattern(regexp = "\\d+", message = "El valor debe contener solo números")
     private String valor;
 
