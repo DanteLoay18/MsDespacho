@@ -17,6 +17,7 @@ public class ProveedorServiceImp implements ProveedorService{
 
     @Autowired
     private ProveedorRepository proveedorRepository;
+    
  @Override
     public Proveedor add(Proveedor proveedor) {
         return proveedorRepository.save(proveedor);

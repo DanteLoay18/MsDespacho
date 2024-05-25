@@ -1,76 +1,103 @@
 package Contraloria.MsDespacho.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import Contraloria.MsDespacho.model.base.BaseModel;
-
 @Entity
 @Table(name = "MGDE_PROVEEDOR")
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE MGDE_PROVEEDOR SET ES_ELIMINADO = 1 WHERE ID = ?")
-@SQLRestriction(value = "ES_ELIMINADO = 0")
-public class Proveedor extends BaseModel{
+@SQLDelete(sql = "UPDATE MGDE_PROVEEDOR SET NCAT_ESELIMINADO = 1 WHERE NPROV_ID = ?")
+@SQLRestriction(value = "NPROV_ESELIMINADO = 0")
+public class Proveedor{
 
-    @Column(name = "tipoProveedor", nullable = false)
+    @Column(name = "NPROV_ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(name = "NCAT_TIPOPROVEEDOR", nullable = false)
     int tipoProveedor;
 
-    @Column(name = "tipoDocumento", nullable = false)
+    @Column(name = "NCAT_TIPODOCUMENTO", nullable = false)
     int tipoDocumento;
 
-    @Column(name = "numeroDocumento",length=15, nullable = false)
+    @Column(name = "CPROV_NUMDOCUMENTO",length=15, nullable = false)
     String numeroDocumento;
 
-    @Column(name = "apellidoPaterno",length=50, nullable = false)
+    @Column(name = "CPROV_APEPATERNO",length=50, nullable = false)
     String apellidoPaterno;
 
-    @Column(name = "apellidoMaterno",length=50, nullable = false)
+    @Column(name = "CPROV_APEMATERNO",length=50, nullable = false)
     String apellidoMaterno;
 
-    @Column(name = "nombres",length=100, nullable = false)
+    @Column(name = "CPROV_NOMBRES",length=100, nullable = false)
     String nombres;
 
-    @Column(name = "telefono",length=15, nullable = true)
+    @Column(name = "CPROV_TELEFONO",length=15, nullable = true)
     String telefono;
 
-    @Column(name = "celular",length=15, nullable = true)
+    @Column(name = "CPROV_CELULAR",length=15, nullable = true)
     String celular;
 
-    @Column(name = "correo",length=100, nullable = true)
+    @Column(name = "CPROV_CORREO",length=100, nullable = true)
     String correo;
 
-    @Column(name = "estado", nullable = true)
-    int estado;
-
-    @Column(name = "pais", nullable = true)
+    @Column(name = "NPROV_PAIS", nullable = true)
     int pais;
 
-    @Column(name = "ubigeo",length=6, nullable = true)
+    @Column(name = "CPROV_UBIGEO",length=6, nullable = true)
     String ubigeo;
 
-    @Column(name = "direccionRENIEC",length=250, nullable = true)
+    @Column(name = "CPROV_DIRRENIECSUNAT",length=250, nullable = true)
     String direccionRENIEC;
 
-    @Column(name = "direccion",length=250, nullable = true)
+    @Column(name = "CPROV_DIRECCION",length=250, nullable = true)
     String direccion;
 
-    @Column(name = "representanteLegal",length=250, nullable = true)
+    @Column(name = "CPROV_REPLEGAL",length=250, nullable = true)
     String representanteLegal;
 
-    @Column(name = "paginaWeb",length=250, nullable = true)
+    @Column(name = "CPROV_PAGWEB",length=250, nullable = true)
     String paginaWeb;
 
-    @Column(name = "tipoDeServicio", nullable = true)
+    @Column(name = "NCAT_TIPOSERVICIO", nullable = true)
     int tipoDeServicio;
+    
+    @Column(name = "NCAT_ESTPROVEEDOR", nullable = true)
+    int estado;
+
+    @Column(name = "NPROV_ESELIMINADO", nullable = false)
+    private boolean esEliminado;
+
+    @Column(name = "NPROV_USUCREACION", nullable = true)
+    private Integer usuarioCreacion;
+
+    @Column(name = "DPROV_FECCREACION", nullable = true)
+    private Date fechaCreacion;
+
+    @Column(name = "NPROV_USUMODIFICACION", nullable = true)
+    private Integer usuarioModificacion;
+
+    @Column(name = "DPROV_FECMODIFICACION", nullable = true)
+    private Date fechaModificacion;
+
+    @Column(name = "NPROV_USUELIMINACION", nullable = true)
+    private Integer usuarioEliminacion;
+
+    @Column(name = "DPROV_FECELIMINACION", nullable = true)
+    private Date fechaEliminacion;
 }
+

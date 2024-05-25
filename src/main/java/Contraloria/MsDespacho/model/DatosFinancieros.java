@@ -2,63 +2,89 @@ package Contraloria.MsDespacho.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import Contraloria.MsDespacho.model.base.BaseModel;
-
 @Entity
 @Table(name = "MGDE_DATOSFINANCIEROS")
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE MGDE_DATOSFINANCIEROS SET ES_ELIMINADO = 1 WHERE ID = ?")
-@SQLRestriction(value = "ES_ELIMINADO = 0")
-public class DatosFinancieros extends BaseModel{
+@SQLDelete(sql = "UPDATE MGDE_DATOSFINANCIEROS SET ES_ELIMINADO = 1 WHERE NFIN_ID = ?")
+@SQLRestriction(value = "NFIN_ESELIMINADO = 0")
+public class DatosFinancieros{
+   
+    @Column(name = "NFIN_ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+   
     @ManyToOne
-    @JoinColumn(name = "idProveedor", nullable = false)
+    @JoinColumn(name = "NFIN_IDFINEEDOR", nullable = false)
     Proveedor proveedor;
 
-    @Column(name = "tipoContrato", nullable = true)
+    @Column(name = "NCAT_TIPOCONTRATO", nullable = true)
     int tipoContrato;
 
-    @Column(name = "nroContrato", nullable = true)
+    @Column(name = "CFIN_NROCONTRATO", nullable = true)
     int nroContrato;
 
-    @Column(name = "archivoContrato",length=100, nullable = true)
+    @Column(name = "CFIN_ARCHCONTRANTO",length=100, nullable = true)
     String archivoContrato;
 
-    @Column(name = "fechaInicio", nullable = true)
+    @Column(name = "CFIN_FECINICIO", nullable = true)
     Date fechaInicio;
 
-    @Column(name = "fechaFin", nullable = true)
+    @Column(name = "CFIN_FECFIN", nullable = true)
     Date fechaFin;
 
-    @Column(name = "fechaConsulta", nullable = true)
+    @Column(name = "CFIN_FECCONSULTA", nullable = true)
     Date fechaConsulta;
 
-    @Column(name = "estado", nullable = true)
-    int estado;
-
-    @Column(name = "tipoServicio", nullable = true)
+    @Column(name = "CCAT_TIPOSERVICIO", nullable = true)
     int tipoServicio;
 
-    @Column(name = "montoContrato")
+    @Column(name = "CFIN_MONCONTRATO")
     double montoContrato;
 
-    @Column(name = "saldoContrato")
+    @Column(name = "NFIN_SALCONTRATO")
     double saldoContrato;
+    
+    @Column(name = "NCAT_ESTFINANCIERO", nullable = true)
+    int estado;
+
+    @Column(name = "NFIN_ESELIMINADO", nullable = false)
+    private boolean esEliminado;
+
+    @Column(name = "NFIN_USUCREACION", nullable = true)
+    private Integer usuarioCreacion;
+
+    @Column(name = "DFIN_FECCREACION", nullable = true)
+    private Date fechaCreacion;
+
+    @Column(name = "NFIN_USUMODIFICACION", nullable = true)
+    private Integer usuarioModificacion;
+
+    @Column(name = "DFIN_FECMODIFICACION", nullable = true)
+    private Date fechaModificacion;
+
+    @Column(name = "NFIN_USUELIMINACION", nullable = true)
+    private Integer usuarioEliminacion;
+
+    @Column(name = "DFIN_FECELIMINACION", nullable = true)
+    private Date fechaEliminacion;
 }
 

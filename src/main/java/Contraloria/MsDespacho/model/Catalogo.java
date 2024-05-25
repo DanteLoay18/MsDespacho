@@ -23,11 +23,11 @@ import org.hibernate.annotations.SQLRestriction;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE MGDE_CATALOGO SET NFIN_ESELIMINADO = 1 WHERE NFIN_ID = ?")
-@SQLRestriction(value = "NFIN_ESELIMINADO = 0")
+@SQLDelete(sql = "UPDATE MGDE_CATALOGO SET NCAT_ESELIMINADO = 1 WHERE NCAT_ID = ?")
+@SQLRestriction(value = "NCAT_ESELIMINADO = 0")
 public class Catalogo {
 
-    @Column(name = "NFIN_ID")
+    @Column(name = "NCAT_ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -51,25 +51,25 @@ public class Catalogo {
     @Column(name = "NCAT_ORDEN", nullable = true)
     private int orden;
 
-    @Column(name = "NFIN_ESELIMINADO", nullable = false)
+    @Column(name = "NCAT_ESELIMINADO", nullable = false)
     private boolean esEliminado;
 
-    @Column(name = "DFIN_FECCREACION", nullable = false)
+    @Column(name = "DCAT_FECCREACION", nullable = false)
     private Date fechaCreacion;
 
-    @Column(name = "NFIN_USUCREACION", nullable = false)
-    private String usuarioCreacion;
+    @Column(name = "NCAT_USUCREACION", nullable = false)
+    private Integer usuarioCreacion;
 
-    @Column(name = "DFIN_FECMODIFICACION", nullable = true)
+    @Column(name = "DCAT_FECMODIFICACION", nullable = true)
     private Date fechaModificacion;
 
-    @Column(name = "NFIN_USUMODIFICACION", nullable = true)
-    private String usuarioModificacion;
+    @Column(name = "NCAT_USUMODIFICACION", nullable = true)
+    private Integer usuarioModificacion;
 
-    @Column(name = "DFIN_FECELIMINACION", nullable = true)
+    @Column(name = "DCAT_FECELIMINACION", nullable = true)
     private Date fechaEliminacion;
 
-    @Column(name = "NFIN_USUELIMINACION", nullable = true)
-    private String usuarioEliminacion;
+    @Column(name = "NCAT_USUELIMINACION", nullable = true)
+    private Integer usuarioEliminacion;
 
 }
