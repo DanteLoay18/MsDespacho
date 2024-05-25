@@ -26,6 +26,7 @@ import Contraloria.MsDespacho.mapper.DatosFinancierosMapper;
 import Contraloria.MsDespacho.model.DatosFinancieros;
 import Contraloria.MsDespacho.model.Proveedor;
 import Contraloria.MsDespacho.routes.ApiRoutes;
+import Contraloria.MsDespacho.service.CatalogoService;
 import Contraloria.MsDespacho.service.DatosFinancierosService;
 import Contraloria.MsDespacho.service.ProveedorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,14 +45,31 @@ public class DatosFinancierosController {
     @Autowired
     DatosFinancierosMapper datosFinancierosMapper;
 
+    @Autowired
+    CatalogoService catalogoService;
+
     @GetMapping(ApiRoutes.LISTAR_DATOSFINANCIEROS)
-    public ResponseEntity<ApiResponse<?>> getUsuarios() {
+    public ResponseEntity<ApiResponse<?>> getDatosFinancieros() {
         try {
             List<DatosFinancieros> datosFinancieross = datosFinancierosService.findAll();
             List<DatosFinancierosDto> datosFinancierosDtos = datosFinancieross.stream()
                     .map(datosFinancierosMapper::toDto)
                     .collect(Collectors.toList());
 
+            for(DatosFinancierosDto datosFinancierosDto : datosFinancierosDtos){
+
+                int tipoContrato = datosFinancierosDto.getTipoContrato();
+
+                if(tipoContrato>0)
+                datosFinancierosDto.setTipoContratoDescripcion(catalogoService.findById(tipoContrato).getDescripcion());
+
+                int tipoServicio = datosFinancierosDto.getTipoServicio();
+
+                if(tipoServicio>0)
+                datosFinancierosDto.setTipoServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
+
+                
+            }
          
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                     "", datosFinancierosDtos, Collections.emptyList()));
@@ -69,6 +87,15 @@ public class DatosFinancierosController {
         DatosFinancieros datosFinancieros = datosFinancierosService.findById(id);
 
         DatosFinancierosDto datosFinancierosDto = datosFinancierosMapper.toDto(datosFinancieros);
+
+        int tipoContrato = datosFinancierosDto.getTipoContrato();
+
+        datosFinancierosDto.setTipoContratoDescripcion(catalogoService.findById(tipoContrato).getDescripcion());
+
+        int tipoServicio = datosFinancierosDto.getTipoServicio();
+
+        datosFinancierosDto.setTipoServicioDescripcion(catalogoService.findById(tipoServicio).getDescripcion());
+
         return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 "", datosFinancierosDto, Collections.emptyList()));
         

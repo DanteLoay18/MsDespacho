@@ -8,8 +8,12 @@ public class ProveedorDto {
     
     int tipoProveedor;
 
+    String tipoProveedorDescripcion;
+    
     int tipoDocumento;
-
+    
+    String tipoDocumentoDescripcion;
+    
     String numeroDocumento;
 
     String apellidoPaterno;
@@ -39,4 +43,6 @@ public class ProveedorDto {
     String paginaWeb;
 
     int tipoDeServicio;
+
+    String tipoDeServicioDescripcion;
 }

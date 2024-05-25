@@ -203,8 +203,6 @@ public class CargoController {
 
             return ResponseEntity.ok(new ApiResponse<>(HttpStatus.OK.value(),
                 MensajesParametrizados.MENSAJE_ELIMINAR_EXITOSO, null,Collections.emptyList()));
-
-        
     }
 
 

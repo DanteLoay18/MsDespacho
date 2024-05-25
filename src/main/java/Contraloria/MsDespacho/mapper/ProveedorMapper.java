@@ -4,7 +4,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
+import org.springframework.data.domain.Page;
 
+import Contraloria.MsDespacho.dto.Cargo.CargoDto;
+import Contraloria.MsDespacho.dto.Paginator.PaginatorResponse;
 import Contraloria.MsDespacho.dto.Proveedor.CreateProveedorRequest;
 import Contraloria.MsDespacho.dto.Proveedor.ProveedorDto;
 import Contraloria.MsDespacho.dto.Proveedor.UpdateProveedorRequest;
@@ -14,6 +17,13 @@ import Contraloria.MsDespacho.model.Proveedor;
 public interface ProveedorMapper {
 
     ProveedorDto toDto(Proveedor proveedor);
+
+
+    @Mapping(source = "content", target = "items")
+    @Mapping(source = "number", target = "page")
+    @Mapping(source = "size", target = "rows")
+    @Mapping(source = "totalElements", target = "total")
+    PaginatorResponse<ProveedorDto> toPaginationDto(Page<Proveedor> pageProveedor);
 
     @Mappings({
         @Mapping(target = "id", ignore = true),

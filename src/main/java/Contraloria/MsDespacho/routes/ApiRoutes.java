@@ -52,6 +52,8 @@ public class ApiRoutes {
     public static final String BUSCAR_PROVEEDOR_POR_ID = "/buscarPorId/{id}";
     public static final String ACTUALIZAR_PROVEEDOR = "/actualizar";
     public static final String ELIMINAR_PROVEEDOR = "/eliminar/{id}";
+    public static final String LISTAR_PROVEEDOR_PAGINADO = "/listar-proveedor-paginado";
+
 
     public static final String ENDPOINT_DATOSFINANCIEROS = "/api/v1/datosFinancieros";
     public static final String LISTAR_DATOSFINANCIEROS = "/listar-datosFinancieros";
