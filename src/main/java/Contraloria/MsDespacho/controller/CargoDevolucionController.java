@@ -132,13 +132,6 @@ public class CargoDevolucionController {
         try {
             CargoDevolucion cargoDevolucion = cargoDevolucionService.findById(request.getId());
 
-            if(cargoDevolucion.getCargoDistribucion().getId() != request.getIdCargoDistribucion()){
-
-            CargoDistribucion cargoDistribucion = cargoDistribucionService.findById(request.getIdCargoDistribucion());
-
-            request.setCargoDistribucion(cargoDistribucion);
-            }
-
             cargoDevolucionMapper.updateRequestToEntity(cargoDevolucion,request);
 
             cargoDevolucionService.update(cargoDevolucion);

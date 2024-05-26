@@ -1,43 +1,30 @@
 package Contraloria.MsDespacho.dto.Cargo;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Optional;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import Contraloria.MsDespacho.model.Documento;
 import lombok.Data;
 
 @Data
 public class UpdateCargoRequest {
 
-    int id;
+    Integer id;
     
-    int idDocumento;
+    Optional<Integer> idSedeDestino;
 
-    int idSedeDestino;
+    Optional<Date> fechaRecepcion;
 
-    Date fechaRecepcion;
-
-    Date fechaRetorno;
+    Optional<Date> fechaRetorno;
     
-    int intento;
+    Optional<Integer> intento;
 
-    int enuMotivoDevolucion;
+    Optional<Integer> enuMotivoDevolucion;
 
-    String descMotivoDevolucion;
+    Optional<String> descMotivoDevolucion;
 
-    String notas;
+    Optional<String> notas;
     
-    String codigoBarra;
-
-    @JsonIgnore
-    private Documento documento;
-
-    @JsonIgnore
-    private Date fechaCreacion;
-
-    @JsonIgnore
-    private String usuarioCreacion;
+    Optional<String> codigoBarra;
 
     Integer usuarioModificacion;
 

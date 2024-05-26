@@ -1,5 +1,7 @@
 package Contraloria.MsDespacho.mapper;
 
+import java.util.Optional;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -45,9 +47,14 @@ public interface CargoDevolucionMapper {
         @Mapping(target = "fechaModificacion", expression = "java(new java.util.Date())"),
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
+        @Mapping(target = "cargoDistribucion", ignore = true),
+        @Mapping(target = "idSedeDestino", expression = "java(unwrap(UpdateCargoDevolucion.getIdSedeDestino(), entity.getIdSedeDestino()))"),
+        @Mapping(target = "idUsuarioRecibe", expression = "java(unwrap(UpdateCargoDevolucion.getIdUsuarioRecibe(), entity.getIdUsuarioRecibe()))")
     })
     void updateRequestToEntity(@MappingTarget CargoDevolucion entity,UpdateCargoDevolucion updateCargoDevolucion);
 
-
+    default <T> T unwrap(Optional<T> optional, T currentValue) {
+        return (optional != null && optional.isPresent()) ? optional.get() : currentValue;
+    }
     
 }

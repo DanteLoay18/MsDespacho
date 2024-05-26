@@ -207,12 +207,6 @@ public class CargoController {
         try {
             Cargo cargo = cargoService.findById(request.getId());
 
-            if(cargo.getDocumento().getId() != request.getIdDocumento()){
-            Documento documento = documentoService.findById(request.getIdDocumento());
-
-            request.setDocumento(documento);
-         }
-
             cargoMapper.updateRequestToEntity(cargo,request);
 
             cargoService.update(cargo);

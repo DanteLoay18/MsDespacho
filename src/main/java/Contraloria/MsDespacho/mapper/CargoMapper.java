@@ -1,5 +1,7 @@
 package Contraloria.MsDespacho.mapper;
 
+import java.util.Optional;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -46,7 +48,19 @@ public interface CargoMapper {
         @Mapping(target = "fechaModificacion", expression = "java(new java.util.Date())"),
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
+        @Mapping(target = "documento", ignore = true),
+        @Mapping(target = "idSedeDestino", expression = "java(unwrap(updateCargoRequest.getIdSedeDestino(), entity.getIdSedeDestino()))"),
+        @Mapping(target = "fechaRecepcion", expression = "java(unwrap(updateCargoRequest.getFechaRecepcion(), entity.getFechaRecepcion()))"),
+        @Mapping(target = "fechaRetorno", expression = "java(unwrap(updateCargoRequest.getFechaRetorno(), entity.getFechaRetorno()))"),
+        @Mapping(target = "intento", expression = "java(unwrap(updateCargoRequest.getIntento(), entity.getIntento()))"),
+        @Mapping(target = "enuMotivoDevolucion", expression = "java(unwrap(updateCargoRequest.getEnuMotivoDevolucion(), entity.getEnuMotivoDevolucion()))"),
+        @Mapping(target = "descMotivoDevolucion", expression = "java(unwrap(updateCargoRequest.getDescMotivoDevolucion(), entity.getDescMotivoDevolucion()))"),
+        @Mapping(target = "notas", expression = "java(unwrap(updateCargoRequest.getNotas(), entity.getNotas()))"),
+        @Mapping(target = "codigoBarra", expression = "java(unwrap(updateCargoRequest.getCodigoBarra(), entity.getCodigoBarra()))")
     })
     void updateRequestToEntity(@MappingTarget Cargo entity,UpdateCargoRequest updateCargoRequest);
 
+    default <T> T unwrap(Optional<T> optional, T currentValue) {
+        return (optional != null && optional.isPresent()) ? optional.get() : currentValue;
+    }
 }
