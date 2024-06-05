@@ -48,8 +48,8 @@ public interface CargoDevolucionMapper {
         @Mapping(target = "usuarioEliminacion", ignore = true),
         @Mapping(target = "fechaEliminacion", ignore = true),
         @Mapping(target = "cargoDistribucion", ignore = true),
-        @Mapping(target = "idSedeDestino", expression = "java(unwrap(UpdateCargoDevolucion.getIdSedeDestino(), entity.getIdSedeDestino()))"),
-        @Mapping(target = "idUsuarioRecibe", expression = "java(unwrap(UpdateCargoDevolucion.getIdUsuarioRecibe(), entity.getIdUsuarioRecibe()))")
+        @Mapping(target = "idSedeDestino", expression = "java(unwrap(updateCargoDevolucion.getIdSedeDestino(), entity.getIdSedeDestino()))"),
+        @Mapping(target = "idUsuarioRecibe", expression = "java(unwrap(updateCargoDevolucion.getIdUsuarioRecibe(), entity.getIdUsuarioRecibe()))")
     })
     void updateRequestToEntity(@MappingTarget CargoDevolucion entity,UpdateCargoDevolucion updateCargoDevolucion);
 
